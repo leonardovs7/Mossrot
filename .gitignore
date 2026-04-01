@@ -1,0 +1,25 @@
+# Cache do Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Ambientes Virtuais (O mais importante para não subir lixo)
+.venv/
+venv/
+env/
+ENV/
+
+# IDEs
+.idea/
+.vscode/
+.env
+
+# Logs e Banco de Dados Local
+*.log
+db.sqlite3
+db.sqlite3-journal
+
+# Distribuição / build
+dist/
+build/
+*.egg-info/

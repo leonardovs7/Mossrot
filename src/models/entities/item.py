@@ -1,0 +1,25 @@
+from dataclasses import dataclass
+#from typing import Optional, Callable
+
+@dataclass
+class Item:
+    id: str
+    name: str #nome do item
+    description: str #descricao do item
+    category: str #categoria do item
+    subcategory: str #subcategoria do item
+    is_consumable: bool #o item é consumivel
+    is_equippable: bool #o item é equipavel
+    is_equipped: bool #o item esta equipado
+    value: int #valor de atributo do item
+    use_id: str #id de uso do item
+
+@dataclass
+class LightEquipment(Item):
+    fuel: float #combustivel
+    max_fuel: float #combustivel maximo
+    fuel_consume: float #taxa de consumo
+    is_lit: bool #esta acesso
+
+    def __str__(self):
+        return f"{self.name}: {self.description}"
