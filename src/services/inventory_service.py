@@ -1,8 +1,59 @@
+from src.engine.game_state import GameState
 from src.handlers.inventory_handler import InventoryHandler
 from src.services.heal_service import HealService
 from src.services.light_service import LightService
-from src.services.weapon_armor_service import WeaponArmorService
 
+class WeaponArmorService:
+
+    @staticmethod
+    def equip_weapon(player, item) -> str:
+        if item.category != "weapon":
+            return f"❌ {item.name} não possui o peso de uma arma."
+
+        feedback = ""
+
+        # 2. Lógica de Troca (Swap)
+        if hasattr(player, 'equipped_weapon') and player.equipped_weapon:
+            old_weapon = player.equipped_weapon
+            InventoryHandler.add_item(player, old_weapon)
+            feedback = f"Você guardou {old_weapon.name}. "
+
+        # 3. Substituição de Valores
+        player.equipped_weapon = item
+        player.weapon = item.name
+        player.base_damage = player.base_damage + item.value
+        player.current_weapon_bonus = item.value
+
+        # 4. Remove a arma nova da mochila
+        InventoryHandler.remove_item(player, item)
+
+        return feedback + f"Você agora empunha {item.name}. (Dano: +{item.value})"
+
+    @staticmethod
+    def equip_armor(player, item) -> str:
+        # 1. Validação
+        if item.category != "armor":
+            return f"❌ {item.name} não serve como proteção."
+
+        feedback = ""
+
+        # 2. Lógica de Troca
+        if hasattr(player, 'equipped_armor') and player.equipped_armor:
+            old_armor = player.equipped_armor
+            InventoryHandler.add_item(player, old_armor)
+            feedback = f"Você removeu {old_armor.name}. "
+
+        # 3. Substituição de Valores
+        player.equipped_armor = item
+        player.armor = item.name
+        player.damage_reduction = player.damage_reduction + item.value
+        player.current_armor_bonus = item.value
+
+        # 4. Remove da mochila
+        InventoryHandler.remove_item(player, item)
+        percent = int(player.current_armor_bonus * 100)
+
+        return feedback + f"Você vestiu {item.name}. (Defesa: +{percent}%)"
 
 class InventoryService:
     @staticmethod
@@ -20,6 +71,9 @@ class InventoryService:
         if item.category == "light":
             return LightService.light_up(player, item)
 
+        if item.category == "fuel":
+            return LightService.refuel(player, item)
+
         # 3. Equipamentos (Armas e Armaduras)
         if item.category == "weapon":
             return WeaponArmorService.equip_weapon(player, item)
@@ -27,5 +81,9 @@ class InventoryService:
         if item.category == "armor":
             return WeaponArmorService.equip_armor(player, item)
 
-        # 4. Caso o item não tenha uma função implementada
+        # 4. Item de Visualização
+        if item.category == "view":
+            return GameState.set("focus_active", True)
+
+        # 5. Caso o item não tenha uma função implementada
         return f"Você observa o {item.name}, mas não sabe como usá-lo agora..."

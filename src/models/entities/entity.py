@@ -8,7 +8,7 @@ class Entity(ABC):
     hp: int #vida atual
     max_hp: int #vida máxima da entidade
     base_damage: int #dano base
-    damage_reduction: int #redução em defesa
+    damage_reduction: float #redução em defesa
     is_defending: bool = field(init=False, default=False) #define se está em estado de defesa
 
     @property

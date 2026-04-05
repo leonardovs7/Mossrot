@@ -4,7 +4,7 @@ class CombatHandler:
     @staticmethod
     def attack(attacker) -> int:
         # Adicionei uma variação mínima para o dano não ser estático
-        bonus = random.randint(0, 3)
+        bonus = random.randint(0, 2)
         return attacker.base_damage + bonus
 
     @staticmethod
@@ -26,7 +26,7 @@ class CombatHandler:
         # 3. Feedback visual
         print(f">> {entity.name} recebe {final_damage} de dano!")
         if reduction_amount > 0:
-            print(f">  Mitigou {int(reduction_amount)} de dano! (HP: {entity.hp}/{entity.max_hp})\n")
+            print(f">  Mitigou {int(reduction_amount)} de dano! (HP: {entity.hp}/{entity.max_hp})")
 
         # 4. Reset do estado (Considere se deve ser aqui ou no fim do turno)
         entity.is_defending = False

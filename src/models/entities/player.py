@@ -37,15 +37,15 @@ class Player(Entity):
         """Calcula o XP necessário baseado no nível atual."""
         return int(10 * (1.5 ** (self.level - 1)))
 
-    @property
-    def total_damage(self) -> int:
+   #@property
+    #def total_damage(self) -> int:
         """Soma o dano base com o valor da arma equipada."""
         # Se tiver arma, usa o .value dela. Se não, bônus é 0.
         bonus = self.equipped_weapon.value if self.equipped_weapon else 0
         return self.base_damage + bonus
 
-    @property
-    def total_reduction(self) -> float:
+    #@property
+    #def total_reduction(self) -> float:
         """Soma a redução base com o bônus da armadura."""
         bonus = self.equipped_armor.value if self.equipped_armor else 0.0
         return self.damage_reduction + bonus

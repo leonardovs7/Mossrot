@@ -1,3 +1,5 @@
+import time
+
 from src.handlers.inventory_handler import InventoryHandler
 from src.models.entities.item import LightEquipment
 
@@ -16,16 +18,18 @@ class LightService:
                 return f"⚠️ A {item.name} está seca. Você precisa de combustível."
 
             item.is_lit = True
+            player.has_light = True
             # Recupera sanidade (limitado ao máximo)
             player.sanity = min(player.max_sanity, player.sanity + item.value)
 
             tipo_chama = "rápida" if item.is_consumable else "pálida"
-            return (f"A chama {tipo_chama} da {item.name} estala, revelando silhuetas.\n"
+            return (f"\nA chama {tipo_chama} da {item.name} estala, revelando silhuetas.\n"
                     f"> Combustível: {item.fuel:.1f}/{item.max_fuel}\n"
                     f"> Sanidade: {player.sanity}/{player.max_sanity} (+{item.value})")
 
         else:
             item.is_lit = False
+            player.has_light = False
             return f">> Você apaga a {item.name} para poupar combustível."
 
     @staticmethod
@@ -43,12 +47,13 @@ class LightService:
 
                 # 2. Alertas de nível baixo
                 if 0 < item.fuel <= 10:
-                    feedback_messages.append(f"⚠️ A chama da {item.name} vacila. Está no fim!")
+                    feedback_messages.append(f"\n⚠️ A chama da {item.name} vacila. Está no fim!")
+                    time.sleep(2)
 
                 # 3. Apagar automático
                 if item.fuel == 0:
                     item.is_lit = False
-                    feedback_messages.append(f"🌑 A {item.name} se apagou! A escuridão te envolve.")
+                    feedback_messages.append(f"\n🌑 A {item.name} se apagou! A escuridão te envolve.")
 
         return feedback_messages
 
@@ -77,6 +82,7 @@ class LightService:
         # 4. Re-acendimento automático
         if not light_item.is_lit:
             light_item.is_lit = True
+            player.has_light = True
             feedback += "\n🔥 Você risca um fósforo e reacende a chama."
 
         # 5. Consome o item de combustível da mochila
@@ -91,5 +97,6 @@ class LightService:
         if light_item:
             light_item.fuel = fuelAmount
             light_item.is_lit = True
+            player.has_light = True
             return f">> A {light_item.name} brilha novamente! [+{fuelAmount} de combustível]"
         return "Você não possui uma fonte de luz para reacender."

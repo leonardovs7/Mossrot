@@ -9,7 +9,6 @@ from src.handlers.shadow_ambush_handler import ShadowAmbushHandler
 from src.models.entities.item import LightEquipment
 from src.services.light_service import LightService
 
-
 class SceneManager:
     def __init__(self, scenes: List['GameScene'], start_id: str):
         self.scenes = {s.id: s for s in scenes}
@@ -68,9 +67,10 @@ class SceneManager:
         if target_id in self.scenes:
             target = self.scenes[target_id]
 
+
             # Lógica de Caverna/Escuridão
             if hasattr(target, 'type') and target.type == "cave":
-                # Consome combustível da lamparina
+                # Consome combustível da lamparina se trocar de cena
                 feedbacks = LightService.process_consume(player)
                 if feedbacks:
                     for msg in feedbacks:
@@ -127,7 +127,8 @@ class SceneManager:
             f"\n--- STATUS DE {player.name} ---\n"
             f"❤️ Vida: {player.hp}/{player.max_hp}\n"
             f"🗡️ Dano: {player.base_damage}\n"
-            f"🔥 Luz:  {fuel}\n"
+            f"🛡️ Armadura: {player.damage_reduction}\n"
+            f"🔥 Combustível: {fuel}\n"
             f"🧠 Sanidade: {player.sanity}/{player.max_sanity}\n"
             f"🌟 Level: {player.level} (XP: {player.current_xp}/{player.next_level_xp})"
         )

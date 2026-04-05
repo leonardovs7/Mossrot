@@ -1,5 +1,8 @@
 import random
+import time
+
 from src.handlers.inventory_handler import InventoryHandler
+from src.models.database.item_db import ItemDB
 from src.models.entities.item import Item
 
 class LootService:
@@ -8,15 +11,14 @@ class LootService:
         drop_chance = 0.4
 
         if random.random() < drop_chance:
-            item_id = random.choice(["cura_leve", "oleo_carne"])
+            item_id = random.choice(["tonico_amargo", "oleo_carne"])
 
-            if item_id == "cura_leve":
-                novo_item = Item(id="cura_leve", name="Tônico de Seiva Amarga", category="heal", value=5)
-            else:
-                novo_item = Item(id="oleo_carne", name="Óleo de Carne Velha", category="fuel", value=20)
+            novo_item = ItemDB.get_item(item_id)
 
-            InventoryHandler.add_item(player, novo_item)
+            if novo_item:
+                InventoryHandler.add_item(player, novo_item)
+                return f"\n✨ Você vasculha os restos e encontra: {novo_item.name}!"
 
-            return f"✨ Você vasculha os restos e encontra: **{novo_item.name}**!"
+            return f"\n⚠️ Algo caiu, mas o ID '{item_id}' não foi achado no ItemDB."
 
-        return "🌑 Você vasculha as cinzas, mas a escuridão não deixou nada para trás."
+        return "\nVocê vasculha as cinzas, mas a escuridão não deixou nada para trás."

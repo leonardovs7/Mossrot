@@ -18,7 +18,7 @@ class HealService:
 
         # 3. Consumo do item (Aqui estava o detalhe!)
         # Precisamos passar (player, item) para o Handler saber qual mochila abrir
-        if item.is_consumable:
+        if item.is_consumable and not recuperado == 0:
             InventoryHandler.remove_item(player, item)
 
         # 4. Feedback narrativo

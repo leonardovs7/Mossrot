@@ -2,6 +2,8 @@ import time
 import sys
 import random
 from typing import List, Union
+
+from src.handlers.xp_handler import LevelHandler
 from src.models.entities.entity import Entity
 from src.models.entities.player import Player
 from src.models.entities.enemy import Enemy
@@ -45,7 +47,7 @@ class CombatService:
             enemies = [enemies]
 
         if is_surprise:
-            print(f"\n⚠️ SURPRESA! Você foi emboscado!")
+            print(f"⚠️ SURPRESA! Você foi emboscado!")
             time.sleep(1)
             for e in enemies:
                 if e.is_alive and player.is_alive:
@@ -64,7 +66,7 @@ class CombatService:
                     print(f"{i} - {e.name} (HP: {e.hp}/{e.max_hp})")
 
                 print(f"\n❤️ Seu HP: {player.hp}/{player.max_hp}")
-                target_input = input("Alvo (nº) ou 'd' para defender: \n> ").lower()
+                target_input = input("Alvo ou 'd' para defender: \n> ").lower()
 
                 if target_input == 'd':
                     player.is_defending = True
@@ -84,8 +86,7 @@ class CombatService:
             for e in enemies:
                 if not e.is_alive and not hasattr(e, "_already_dead_msg"):
                     print(f"\n🏆 {e.name} sucumbiu!")
-                    # Usando xp_reward (snake_case) como no ShadowAmbushHandler
-                    player.earn_xp(e.xp_reward)
+                    LevelHandler.earn_xp(player, e.xp_reward)
                     e._already_dead_msg = True
 
             # --- TURNO DOS INIMIGOS ---

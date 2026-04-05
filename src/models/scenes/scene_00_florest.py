@@ -25,11 +25,11 @@ def description(player):
     )
 
 def dogs_description(player):
-    if player.sanity == 100:
-        SanityService.reduce_sanity(player, random.randint(3,15))
-        input("\n[Pressione Enter para continuar...]")
-        return (
-        "Você volta ao lugar onde tudo começou, mas o cenário é irreconhecível.\n"
+    if player.sanity == 100 and not GameState.get("putrid_dogs_dead"):
+        feedback = SanityService.reduce_sanity(player, random.randint(3,15))
+        print(feedback)
+        input("\n[Pressione Enter para continuar...]\n")
+        return ("Você volta ao lugar onde tudo começou, mas o cenário é irreconhecível.\n"
         "A lama onde você acordou agora parece um pântano de piche negro, borbulhando\n"
         "com um odor de carniça que tranca a garganta. No centro do caminho, duas\n"
         "figuras grotescas bloqueiam a passagem.\n\n"
@@ -41,12 +41,7 @@ def dogs_description(player):
     return (
         "Você volta ao lugar onde tudo começou, mas o cenário é irreconhecível.\n"
         "A lama onde você acordou agora parece um pântano de piche negro, borbulhando\n"
-        "com um odor de carniça que tranca a garganta. No centro do caminho, duas\n"
-        "figuras grotescas bloqueiam a passagem.\n\n"
-        "São cães, ou o que restou deles. Seus corpos são uma amálgama perturbadora:\n"
-        "galhos retorcidos servem como costelas, musgo rasteja por feridas abertas e\n"
-        "pedaços de carne pendem de 'ossos' feitos de madeira velha. Eles não latem.\n"
-        "O único som que emite é o estalo de madeira seca e o chiado de moscas.\n"
+        "com um odor de carniça que tranca a garganta.\n"
     )
 
 def find_shovel(player):
@@ -60,10 +55,11 @@ def find_shovel(player):
     return "\nVocê mexe nos arbustos secos, mas só encontra terra preta e folhas mortas."
 
 def combat_putrid_dogs(player):
-    dog1 = Enemy(name="Casca", level=1, hp=3, maxHp=3, defenseReduction=0.5, baseDamage=2, xpReward=2)
-    dog2 = Enemy(name="Medula", level=1, hp=4, maxHp=4, defenseReduction=0.0, baseDamage=1, xpReward=3)
+    dog1 = Enemy(name="Casca", level=1, hp=3, max_hp=3, damage_reduction=0.5, base_damage=1, xp_reward=3)
+    dog2 = Enemy(name="Medula", level=1, hp=4, max_hp=4, damage_reduction=0.0, base_damage=1, xp_reward=3)
     enemies = [dog1, dog2]
-    CombatService.start_combat(player, enemies, isSurprise=True)
+    CombatService.start_combat(player, enemies, is_surprise=True)
+    GameState.set("putrid_dogs_dead", True)
 
 def seek_dogs_loot(player):
     cura = ItemDB.get_item("tonico_amargo")

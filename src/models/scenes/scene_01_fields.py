@@ -3,7 +3,7 @@ from src.handlers.inventory_handler import InventoryHandler
 from src.models.entities.scene import GameScene, SceneOption
 
 def description(player):
-    if GameState.get("espantalho_morto") and not InventoryHandler.has_item_by_id(player,"lamparina_musgosa"):
+    if GameState.get("scarecrow_dead") and not InventoryHandler.has_item_by_id(player,"lamparina_musgosa"):
         return (
             "A entrada do casebre agora está escancarada e silenciosa.\n"
             "Onde antes havia uma aura de ameaça, resta apenas o som do vento\n"
@@ -36,5 +36,14 @@ MISTERIOUS_FIELD = GameScene(
                     requirement=lambda i: not (InventoryHandler.has_item_by_id(i, "adaga_enferrujada") or InventoryHandler.has_item_by_id(i, "lamparina_musgosa")),
                     only_once=False),
         SceneOption("Recuar para a segurança relativa da trilha enlamaçada", target_scene_id="dense_florest")
+    ]
+)
+
+MISTERIOUS_FIELD_AFTER_HATCH = GameScene(
+    id="misterious_field_after_hatch",
+    title="O Campo Agora Estranhamente Silencioso",
+    description=description,
+    options=[
+        SceneOption("Recuar para a segurança relativa da trilha enlamaçada", target_scene_id="dense_florest_attack")
     ]
 )

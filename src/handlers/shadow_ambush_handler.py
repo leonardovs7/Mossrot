@@ -1,4 +1,5 @@
 import random
+
 from src.models.entities.enemy import Enemy
 from src.models.entities.player import Player
 from src.services.combat_service import CombatService
@@ -9,7 +10,7 @@ class ShadowAmbushHandler:
     @staticmethod
     def trigger_shadow_ambush(player: Player):
         print("\nA escuridão ao seu redor se torna densa e faminta...")
-        print("Algo rasteja do breu absoluto, atraído pelo seu medo.")
+        print("Algo rasteja do breu absoluto, atraído pelo seu medo.\n")
 
         # Nomes temáticos
         names_list = ['Vulto Apodrecido', 'Forma Corrompida', 'Sombra Enraizada', 'Aparição Podre']
@@ -17,15 +18,15 @@ class ShadowAmbushHandler:
 
         # Escalonamento básico baseado no nível do jogador
         # Isso garante que a emboscada seja sempre um desafio justo
-        level_mult = max(2, player.level)
-        hp = random.randint(4, 8) * level_mult
+        level_mult = max(1, player.level)
+        hp = random.randint(1, 8) * level_mult
         defense = random.uniform(0.02, 0.06)
-        damage = random.randint(3, 7) + (level_mult * 2)
+        damage = random.randint(1, 4)
         xp_reward = random.randint(1, 3) * level_mult
 
         enemy = Enemy(
             name=final_name,
-            level=player.level,  # Acompanha o jogador
+            level=player.level,
             hp=hp,
             max_hp=hp,
             damage_reduction=defense,
@@ -45,6 +46,4 @@ class ShadowAmbushHandler:
             print(loot_msg)
             print(feedback_light)
         else:
-            # Garante o estado de morte (embora o CombatService provavelmente já faça isso)
-            player.isAlive = False
             print("\nA escuridão finalmente o consumiu...")
