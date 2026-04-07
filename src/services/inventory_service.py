@@ -2,6 +2,8 @@ from src.engine.game_state import GameState
 from src.handlers.inventory_handler import InventoryHandler
 from src.services.heal_service import HealService
 from src.services.light_service import LightService
+from src.services.sanity_service import SanityService
+
 
 class WeaponArmorService:
 
@@ -64,8 +66,16 @@ class InventoryService:
         """
 
         # 1. Itens de Consumo (Cura)
-        if item.category == "heal":
+        if item.category == "heal" and not item.subcategory == "sanityHeal" and not item.subcategory == "multiHeal":
             return HealService.heal(player, item)
+
+        # 1.1 Itens de Consumo (Sanidade)
+        if item.category == "heal" and item.subcategory == "sanityHeal":
+            return SanityService.increase_sanity(player, item.value)
+
+        # 1.2 Itens de Consumo com buff múltiplo
+        if item.subcategory == "multiHeal":
+            return f"{SanityService.increase_sanity(player, item.value)} \nAlém disso, {HealService.heal(player, item).lower()}"
 
         # 2. Itens de Utilidade (Luz/Sanidade)
         if item.category == "light":
@@ -83,7 +93,11 @@ class InventoryService:
 
         # 4. Item de Visualização
         if item.category == "view":
-            return GameState.set("focus_active", True)
+            if not GameState.get("focus_active"):
+                GameState.set("focus_active", True)
+                return ("Você ergue o Âmbar. A realidade se dobra, revelando o fluxo da seiva negra nas paredes."
+                        "\n> Novas Opções Liberadas!")
+            return "Você já está concentrado e enxergando mais do que deveria ser possível ver.."
 
         # 5. Caso o item não tenha uma função implementada
         return f"Você observa o {item.name}, mas não sabe como usá-lo agora..."

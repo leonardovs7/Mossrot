@@ -12,7 +12,8 @@ class Item:
     is_equippable: bool #o item é equipavel
     is_equipped: bool #o item esta equipado
     value: int #valor de atributo do item
-    use_id: str #id de uso do item
+    stackable: bool #se o item é estacavel
+    quantity: int #qtd de itens iguais no inv
 
 @dataclass
 class LightEquipment(Item):

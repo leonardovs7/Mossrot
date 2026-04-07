@@ -53,6 +53,7 @@ class LightService:
                 # 3. Apagar automático
                 if item.fuel == 0:
                     item.is_lit = False
+                    player.has_light = False
                     feedback_messages.append(f"\n🌑 A {item.name} se apagou! A escuridão te envolve.")
 
         return feedback_messages

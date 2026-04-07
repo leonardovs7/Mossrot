@@ -25,13 +25,14 @@ def main():
     InventoryHandler.add_item(player, ItemDB.get_item("lamparina_musgosa"))
     InventoryHandler.add_item(player, ItemDB.get_item("caixa_fosforos"))
     InventoryHandler.add_item(player, ItemDB.get_item("oleo_carne"))
+    InventoryHandler.add_item(player, ItemDB.get_item("cicatriz_ambar"))
     player.hp = 4000
     player.max_hp = 4000
     player.base_damage = 300
 
 
     try:
-        manager = SceneManager(scenes=ALL_SCENES, start_id="abism_first_chamber")
+        manager = SceneManager(scenes=ALL_SCENES, start_id="watcher_basement")
         manager.navigate(player)
 
     except KeyboardInterrupt:

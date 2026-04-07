@@ -26,7 +26,8 @@ def going_table(player):
     if not InventoryHandler.has_item_by_id(player,"adaga_enferrujada"):
         dagger =  ItemDB.get_item("adaga_enferrujada")
         InventoryHandler.add_item(player, dagger)
-        print("\nDeseja equipar o item agora? [1] Sim | [2] Não")
+        print("\nDeseja equipar o item agora?"
+              "\n[1] Sim \n[2] Não")
         choice = input("> ")
         if choice == "1":
             feedback = InventoryService.use(player, dagger)

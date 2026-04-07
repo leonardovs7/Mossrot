@@ -18,7 +18,22 @@ class ItemDB:
             is_consumable=False,
             is_equippable=False,
             is_equipped=False,
-            use_id="cavar",
+            stackable=False,
+            quantity=1,
+            value=0
+        ),
+
+        "pe_de_cabra": Item(
+            id="pe_de_cabra",
+            name="Pe de Cabra Ensanguentada",
+            description="Uma barra de ferro fundido, pesada e fria ao toque manchada com um sangue escuro e seco",
+            category="util",
+            subcategory="break",
+            is_consumable=False,
+            is_equippable=False,
+            is_equipped=False,
+            stackable=False,
+            quantity=1,
             value=0
         ),
 
@@ -31,38 +46,13 @@ class ItemDB:
             is_consumable=False,
             is_equippable=False,
             is_equipped=False,
-            use_id="lamparina_musgosa",
+            stackable=False,
+            quantity=1,
             value=5,
             fuel=100.0,
             max_fuel=100.0,
             fuel_consume=10.0,
             is_lit=False
-        ),
-
-        "caixa_fosforos": Item(
-            id="caixa_fosforos",
-            name="Caixa de Fósforos",
-            description="Uma pequena caixa úmida, mas cujos palitos permanecem secos.",
-            category="util",
-            subcategory="util",
-            is_consumable=False,
-            is_equippable=False,
-            is_equipped=False,
-            use_id="acender",
-            value=0
-        ),
-
-        "oleo_carne": Item(
-            id="oleo_carne",
-            name="Óleo de Carne Velha",
-            description="Líquido rançoso extraído de tecidos podres. Queima com fumaça preta.",
-            category="fuel",
-            subcategory="fuel",
-            is_consumable=True,
-            is_equippable=False,
-            is_equipped=False,
-            use_id="combustivel_fraco",
-            value=30
         ),
 
         # --- COMBATE ---
@@ -75,8 +65,58 @@ class ItemDB:
             is_consumable=False,
             is_equippable=True,
             is_equipped=False,
-            use_id="adaga_enferrujada",
+            stackable=False,
+            quantity=1,
             value=2
+        ),
+
+        "caixa_fosforos": Item(
+            id="caixa_fosforos",
+            name="Caixa de Fósforos",
+            description="Uma pequena caixa úmida, mas cujos palitos permanecem secos.",
+            category="util",
+            subcategory="util",
+            is_consumable=False,
+            is_equippable=False,
+            is_equipped=False,
+            stackable=False,
+            quantity=1,
+            value=0
+        ),
+
+        #CONSUMIVEIS
+
+        "oleo_carne": Item(
+            id="oleo_carne",
+            name="Óleo de Carne Velha",
+            description="Líquido rançoso extraído de tecidos podres. Queima com fumaça preta.",
+            category="fuel",
+            subcategory="fuel",
+            is_consumable=True,
+            is_equippable=False,
+            is_equipped=False,
+            stackable=True,
+            quantity=1,
+            value=30
+        ),
+
+        "tonico_opio": Item(
+            id= "tonico_opio",
+            name= "Tônico de Ópio do Sanatório",
+            description= (
+                "Um frasco de vidro âmbar com o timbre do Sanatório de Vidro Fosco gravado no vidro. "
+                "Contém um extrato denso e escuro de papoula misturado a sedativos químicos. "
+                "O aroma adocicado e enjoativo promete um silêncio artificial para mentes "
+                "estilhaçadas, abafando os sussurros que vêm das paredes de limo."
+            ),
+            category= "heal",
+            subcategory="sanityHeal",
+            stackable= True,
+            is_consumable=True,
+            is_equippable=False,
+            is_equipped=False,
+            quantity= 1,
+            value=25
         ),
 
         # --- CURA ---
@@ -89,7 +129,8 @@ class ItemDB:
             is_consumable=True,
             is_equippable=False,
             is_equipped=False,
-            use_id="cura_leve",
+            stackable=True,
+            quantity=1,
             value=5
         ),
 
@@ -102,7 +143,8 @@ class ItemDB:
             is_consumable=True,
             is_equippable=False,
             is_equipped=False,
-            use_id="cura_media",
+            stackable=True,
+            quantity=1,
             value=10
         ),
 
@@ -115,8 +157,23 @@ class ItemDB:
             is_consumable=True,
             is_equippable=False,
             is_equipped=False,
-            use_id="cura_forte",
+            stackable=True,
+            quantity=1,
             value=25
+        ),
+
+        "sais_clinicos": Item(
+            id="sais_clinicos",
+            name="Sais de Suporte Clínico",
+            description=("Um pequeno frasco de vidro verde com uma tampa de cortiça."),
+            category="heal",
+            subcategory="multiHeal",
+            is_consumable=True,
+            is_equippable=False,
+            is_equipped=False,
+            stackable=True,
+            quantity=1,
+            value=15
         ),
 
         # --- LORE E CHAVES ---
@@ -124,12 +181,13 @@ class ItemDB:
             id="cicatriz_ambar",
             name="Cicatriz de Âmbar",
             description="Revela as veias de seiva negra que pulsam nas árvores mortas.",
-            category="lore",
-            subcategory="lore",
+            category="view",
+            subcategory="view",
             is_consumable=False,
             is_equippable=True,
             is_equipped=False,
-            use_id="cicatriz_ambar",
+            stackable=False,
+            quantity=1,
             value=0
         ),
 
@@ -142,7 +200,8 @@ class ItemDB:
             is_consumable=False,
             is_equippable=False,
             is_equipped=False,
-            use_id="chave_porao",
+            stackable=False,
+            quantity=1,
             value=0
         )
     }

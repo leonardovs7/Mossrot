@@ -3,6 +3,7 @@ import sys
 import random
 from typing import List
 
+from src.engine.game_state import GameState
 from src.services.inventory_service import InventoryService
 from src.services.combat_service import CombatService
 from src.handlers.shadow_ambush_handler import ShadowAmbushHandler
@@ -19,8 +20,8 @@ class SceneManager:
         for x in text:
             sys.stdout.write(x)
             sys.stdout.flush()
-            #delay = random.uniform(0.01, 0.03)
-            delay = 0.00
+            #delay = random.uniform(0.000, 0.008)
+            delay = 0
             time.sleep(delay)  # Um delay mínimo para o efeito
         print()
 
@@ -67,6 +68,12 @@ class SceneManager:
         if target_id in self.scenes:
             target = self.scenes[target_id]
 
+            if self.current_scene and self.current_scene.id != target_id:
+                # Só reseta se o foco estava ligado
+                if GameState.get("focus_active"):
+                    GameState.set("focus_active", False)
+                    self.type_text("\n👁️ Sua concentração se quebra ao mudar de ambiente...")
+
 
             # Lógica de Caverna/Escuridão
             if hasattr(target, 'type') and target.type == "cave":
@@ -77,7 +84,7 @@ class SceneManager:
                         self.type_text(msg)
 
                 # Se não tem luz (atributo do Player), gera emboscada
-                if not getattr(player, 'has_light', False):
+                if not any(getattr(i, 'is_lit', False) for i in player.inventory):
                     ShadowAmbushHandler.trigger_shadow_ambush(player)
 
             if player.is_alive:
@@ -92,7 +99,8 @@ class SceneManager:
             return
 
         for i, item in enumerate(player.inventory, 1):
-            print(f"{i} - {item.name} [{item.category}]")
+            name_and_quantity = f"({item.quantity}x) {item.name}"
+            print(f"{i} - {name_and_quantity:<35} [{item.category}]")
 
         print("\n[EQUIPAMENTOS]")
         print(f"🗡️ Arma: {player.weapon} (+{player.current_weapon_bonus})")
@@ -159,6 +167,7 @@ class SceneManager:
                         feedback = selected.action(player)
                         if isinstance(feedback, str):
                             self.type_text(feedback)
+                    input("\n[Pressione Enter para continuar...]")
 
                     selected.is_used = True
                     self.move_scene(selected.target_scene_id, player)
