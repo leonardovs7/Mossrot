@@ -353,12 +353,12 @@ ABISM_THIRD_CHAMBER = GameScene(
                 "exibindo rostos de pacientes com olhos vendados e sorrisos costurados — fragmentos de memórias que escaparam do Sanatório.\n"),
     type="cave",
     options=[
-        SceneOption("Focar a Cicatriz de Âmbar", action=toggle_amber_vision, target_scene_id="abism_third_chamber"),
-        SceneOption("Segredo: Investigar as fotos sob o limo",
+        SceneOption("Focar sua consciência ao brilho da Cicatriz de Âmba", action=toggle_amber_vision, target_scene_id="abism_third_chamber"),
+        SceneOption("Segredo: Descascar a crosta de limo sobre os retratos esquecidos",
                             requirement=lambda p: GameState.get("focus_active"),
                             action=read_creepy_photos,
                             target_scene_id="abism_third_chamber"),
-        SceneOption("Subir a escada para o Porão", target_scene_id="watcher_basement"),
-        SceneOption("Voltar para o Átrio das Artérias", target_scene_id="abism_second_chamber")
+        SceneOption("Escalar as raizes podres em direção ao Porão", target_scene_id="watcher_basement"),
+        SceneOption("Retornar ao latejar constante do Átrio das Artérias", target_scene_id="abism_second_chamber")
     ]
 )

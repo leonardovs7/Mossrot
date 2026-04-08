@@ -24,6 +24,9 @@ class Player(Entity):
     sanity: int = 100
     max_sanity: int = 100
 
+    # --- Esporos (Mecânica de Respiração) ---
+    spore_debt: int = 0
+
     # --- Inventário e Equipamento ---
     inventory: List[Item] = field(default_factory=list)
     equipped_weapon: Optional[Item] = None

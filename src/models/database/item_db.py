@@ -2,7 +2,6 @@ import copy
 from typing import Dict, Optional
 from src.models.entities.item import Item, LightEquipment
 
-
 class ItemDB:
     """Tabela macabra de registros de itens do jogo."""
 
@@ -20,7 +19,8 @@ class ItemDB:
             is_equipped=False,
             stackable=False,
             quantity=1,
-            value=0
+            value=0,
+            passive_value=0
         ),
 
         "pe_de_cabra": Item(
@@ -34,7 +34,8 @@ class ItemDB:
             is_equipped=False,
             stackable=False,
             quantity=1,
-            value=0
+            value=0,
+            passive_value=0
         ),
 
         "lamparina_musgosa": LightEquipment(
@@ -52,10 +53,13 @@ class ItemDB:
             fuel=100.0,
             max_fuel=100.0,
             fuel_consume=10.0,
-            is_lit=False
+            is_lit=False,
+            passive_value=0
         ),
 
         # --- COMBATE ---
+
+        #armas
         "adaga_enferrujada": Item(
             id="adaga_enferrujada",
             name="Adaga Enferrujada",
@@ -67,7 +71,39 @@ class ItemDB:
             is_equipped=False,
             stackable=False,
             quantity=1,
-            value=2
+            value=2,
+            passive_value=0
+        ),
+
+        "estilete_raiz": Item(
+            id="estilete_raiz",
+            name="Estilete de Raiz Negra",
+            description="Uma haste longa e retorcida extraída das profundezas do sistema radicular que drena o solo infectado sob estas fundações.",
+            category="weapon",
+            subcategory="poison",
+            is_consumable=False,
+            is_equippable=True,
+            is_equipped=False,
+            stackable=False,
+            quantity=1,
+            value=6,
+            passive_value=2
+        ),
+
+        #armadura
+        "colete_couro": Item(
+            id="colete_couro",
+            name="Colete de Couro Enraizado",
+            description="O couro te esconde, mas a raiz te sustenta. É um lembrete constante de que, neste lugar, a proteção exige um preço orgânico.",
+            category="armor",
+            subcategory="plate",
+            is_consumable=False,
+            is_equippable=True,
+            is_equipped=False,
+            stackable=False,
+            quantity=1,
+            value=0.4,
+            passive_value=0
         ),
 
         "caixa_fosforos": Item(
@@ -81,7 +117,8 @@ class ItemDB:
             is_equipped=False,
             stackable=False,
             quantity=1,
-            value=0
+            value=0,
+            passive_value=0
         ),
 
         #CONSUMIVEIS
@@ -97,26 +134,8 @@ class ItemDB:
             is_equipped=False,
             stackable=True,
             quantity=1,
-            value=30
-        ),
-
-        "tonico_opio": Item(
-            id= "tonico_opio",
-            name= "Tônico de Ópio do Sanatório",
-            description= (
-                "Um frasco de vidro âmbar com o timbre do Sanatório de Vidro Fosco gravado no vidro. "
-                "Contém um extrato denso e escuro de papoula misturado a sedativos químicos. "
-                "O aroma adocicado e enjoativo promete um silêncio artificial para mentes "
-                "estilhaçadas, abafando os sussurros que vêm das paredes de limo."
-            ),
-            category= "heal",
-            subcategory="sanityHeal",
-            stackable= True,
-            is_consumable=True,
-            is_equippable=False,
-            is_equipped=False,
-            quantity= 1,
-            value=25
+            value=30,
+            passive_value=0
         ),
 
         # --- CURA ---
@@ -131,7 +150,8 @@ class ItemDB:
             is_equipped=False,
             stackable=True,
             quantity=1,
-            value=5
+            value=5,
+            passive_value=0
         ),
 
         "unguento_fibroso": Item(
@@ -145,7 +165,28 @@ class ItemDB:
             is_equipped=False,
             stackable=True,
             quantity=1,
-            value=10
+            value=10,
+            passive_value=0
+        ),
+
+        "tonico_opio": Item(
+            id="tonico_opio",
+            name="Tônico de Ópio do Sanatório",
+            description=(
+                "Um frasco de vidro âmbar com o timbre do Sanatório de Vidro Fosco gravado no vidro. "
+                "Contém um extrato denso e escuro de papoula misturado a sedativos químicos. "
+                "O aroma adocicado e enjoativo promete um silêncio artificial para mentes "
+                "estilhaçadas, abafando os sussurros que vêm das paredes de limo."
+            ),
+            category="heal",
+            subcategory="sanityHeal",
+            stackable=True,
+            is_consumable=True,
+            is_equippable=False,
+            is_equipped=False,
+            quantity=1,
+            value=15,
+            passive_value=0
         ),
 
         "fluido_ancestral": Item(
@@ -159,7 +200,8 @@ class ItemDB:
             is_equipped=False,
             stackable=True,
             quantity=1,
-            value=25
+            value=25,
+            passive_value=0
         ),
 
         "sais_clinicos": Item(
@@ -173,7 +215,8 @@ class ItemDB:
             is_equipped=False,
             stackable=True,
             quantity=1,
-            value=15
+            value=15,
+            passive_value=0
         ),
 
         # --- LORE E CHAVES ---
@@ -188,8 +231,15 @@ class ItemDB:
             is_equipped=False,
             stackable=False,
             quantity=1,
-            value=0
+            value=0,
+            passive_value=0
         ),
+
+        #"mapa_sanatorio_lavanderia": Item(
+        #    id="mapa_sanatorio_lavanderia",
+        #    name="Esboço da Lavanderia do Sanatório",
+        #    description="A planta da Lavanderia do Sanatória que abre espaço para locais que você não teria ciência anteriormente"
+        #)
 
         "chave_porao": Item(
             id="chave_porao",
@@ -202,7 +252,8 @@ class ItemDB:
             is_equipped=False,
             stackable=False,
             quantity=1,
-            value=0
+            value=0,
+            passive_value=0
         )
     }
 

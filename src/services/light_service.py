@@ -19,11 +19,12 @@ class LightService:
 
             item.is_lit = True
             player.has_light = True
+
             # Recupera sanidade (limitado ao máximo)
             player.sanity = min(player.max_sanity, player.sanity + item.value)
 
             tipo_chama = "rápida" if item.is_consumable else "pálida"
-            return (f"\nA chama {tipo_chama} da {item.name} estala, revelando silhuetas.\n"
+            return (f"A chama {tipo_chama} da {item.name} estala, revelando silhuetas.\n"
                     f"> Combustível: {item.fuel:.1f}/{item.max_fuel}\n"
                     f"> Sanidade: {player.sanity}/{player.max_sanity} (+{item.value})")
 

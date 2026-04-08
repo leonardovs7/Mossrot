@@ -14,9 +14,9 @@ class SceneOption:
 class GameScene:
     id: str  # ID único da cena
     title: str  # Título que aparece no topo
-    # A descrição pode ser uma String OU uma Função que retorna String (dinâmica)
-    description: Union[str, Callable[[Any], str]]
+    description: Union[str, Callable[[Any], str]] # A descrição pode ser uma String OU uma Função que retorna String (dinâmica)
+    type: str = "regular"  # Ex: "cave" para disparar emboscadas
+    spore_index: int = 0 #% de mofo para salas moldy
     on_enter: Optional[Callable[[Any], Any]] = None  # Evento ao entrar na cena
     on_enter_repeatable: bool = False  # Define se o evento on_enter acontece toda vez
     options: List[SceneOption] = field(default_factory=list)  # Lista de escolhas
-    type: str = "regular"  # Ex: "cave" para disparar emboscadas

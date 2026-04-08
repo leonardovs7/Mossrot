@@ -32,7 +32,7 @@ def main():
 
 
     try:
-        manager = SceneManager(scenes=ALL_SCENES, start_id="watcher_basement")
+        manager = SceneManager(scenes=ALL_SCENES, start_id="watcher_upstairs")
         manager.navigate(player)
 
     except KeyboardInterrupt:

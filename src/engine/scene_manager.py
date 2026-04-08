@@ -9,6 +9,8 @@ from src.services.combat_service import CombatService
 from src.handlers.shadow_ambush_handler import ShadowAmbushHandler
 from src.models.entities.item import LightEquipment
 from src.services.light_service import LightService
+from src.services.spore_service import SporeService
+
 
 class SceneManager:
     def __init__(self, scenes: List['GameScene'], start_id: str):
@@ -27,7 +29,11 @@ class SceneManager:
 
     def display_scene(self, player):
         while True:
-            self.type_text(f"\n=== {self.current_scene.title} ===\n")
+            spore_perc = getattr(self.current_scene, 'spore_index', None)
+            if spore_perc > 0:
+                self.type_text(f"\n=== {self.current_scene.title} - [{spore_perc}% Contaminado] ===\n")
+            else:
+                self.type_text(f"\n=== {self.current_scene.title} ===\n")
 
             description = self.current_scene.description
             if callable(description):
@@ -74,6 +80,11 @@ class SceneManager:
                     GameState.set("focus_active", False)
                     self.type_text("\n👁️ Sua concentração se quebra ao mudar de ambiente...")
 
+                # Só recupera a respiração se sair da área mofada
+                if hasattr(target, 'type') and target.type != "moldy":
+                    recovery_msg = SporeService.recover_breathe(player)
+                    if recovery_msg:
+                        self.type_text(recovery_msg)
 
             # Lógica de Caverna/Escuridão
             if hasattr(target, 'type') and target.type == "cave":
@@ -86,6 +97,13 @@ class SceneManager:
                 # Se não tem luz (atributo do Player), gera emboscada
                 if not any(getattr(i, 'is_lit', False) for i in player.inventory):
                     ShadowAmbushHandler.trigger_shadow_ambush(player)
+
+            # Lógica de Áreas Mofadas
+            if hasattr(target, 'type') and target.type == "moldy":
+                feedbacks = SporeService.process_breathing(player, target)
+                if feedbacks:
+                    for msg in feedbacks:
+                        self.type_text(msg)
 
             if player.is_alive:
                 self.current_scene = target
