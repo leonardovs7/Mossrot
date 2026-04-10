@@ -6,14 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="bdb4e281-9c26-4b83-9577-1aec90088de7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/engine/scene_bridge.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/engine/scene_bridge.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/engine/scene_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/engine/scene_manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/handlers/turn_handler.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/handlers/turn_handler.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/scenes/scene_02_old_hut.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/scenes/scene_02_old_hut.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/scenes/scene_04_hatch.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/scenes/scene_04_hatch.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/scenes/scene_05_abism.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/scenes/scene_05_abism.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/combat_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/combat_service.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -152,8 +144,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-PY-253.31033.139" />
-        <option value="bundled-python-sdk-2653e85de345-6d6dccd035ac-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-253.31033.139" />
+        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-PY-253.32098.74" />
+        <option value="bundled-python-sdk-1cd77e80b48f-6d6dccd035ac-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-253.32098.74" />
       </set>
     </attachedChunks>
   </component>
@@ -185,6 +177,8 @@
       <workItem from="1775824004599" duration="339000" />
       <workItem from="1775824368559" duration="6159000" />
       <workItem from="1775832049683" duration="6155000" />
+      <workItem from="1775838310724" duration="965000" />
+      <workItem from="1775839578916" duration="73000" />
     </task>
     <servers />
   </component>

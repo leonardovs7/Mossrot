@@ -18,8 +18,7 @@ class CombatService:
         attacker.is_defending = False
 
         if isinstance(attacker, Player) and not skip_menu:
-            print("\n" + "=" * 45)
-            print(f"\n[ TURNO DE {attacker.name} ]\n".upper())
+            print(f"\n=== [ TURNO DE {attacker.name} ] ===\n".upper())
             start_turn_announce = TurnHandler.get_turn_announcement(attacker)
             print(f"'{start_turn_announce}'")
             print(f"❤️ HP: {attacker.hp}/{attacker.max_hp} | 🗡️ {attacker.weapon} (+{attacker.current_weapon_damage}) | 🛡️ {attacker.armor} (+{attacker.current_armor_defense * 100}%)")
@@ -107,14 +106,12 @@ class CombatService:
             active_enemies = [e for e in enemies if e.is_alive]
             if active_enemies and player.is_alive:
                 if len(active_enemies) == 1:
-                    print("\n" + "=" * 45)
-                    print(f"\n[ TURNO DE {e.name} ]\n".upper())
+                    print(f"\n=== [ TURNO DE {e.name} ] ===\n".upper())
                     start_turn_announce = TurnHandler.get_turn_announcement(e)
                     print(f"'{start_turn_announce}'")
                     print(f"❤️ {e.name} - HP: {e.hp}/{e.max_hp} | 🛡️ {e.name} - (+{e.damage_reduction * 100:.2f}%)")
                 else:
-                    print("\n" + "=" * 45)
-                    print(f"\n[ TURNO DOS INIMIGOS ]")
+                    print(f"\n=== [ TURNO DOS INIMIGOS ] ===\n")
                     start_turn_announce = TurnHandler.get_turn_announcement(e)
                     print(f"'{start_turn_announce}'")
                     print(f"❤️ {e.name} - HP: {e.hp}/{e.max_hp} | 🛡️ {e.name} - (+{e.damage_reduction * 100:.2f}%)")
