@@ -1,6 +1,7 @@
 import sys
 
 from src.engine.game_state import GameState
+from src.engine.scene_bridge import SceneBridge
 from src.engine.scene_manager import SceneManager
 from src.models.database.scenes_db import ALL_SCENES
 from src.models.entities.player import Player
@@ -8,14 +9,14 @@ from src.models.entities.player import Player
 def main():
     GameState.set("active", True)
 
-    print("Você desperta na terra fria de uma floresta densa e sombria, a mente turva e sem memória de como chegou ali..")
-    print("\nComo a história chamará você? ")
+    SceneBridge.say("Você desperta na terra fria de uma floresta densa e sombria, a mente turva e sem memória de como chegou ali..")
+    SceneBridge.say("\nComo a história chamará você? ")
     nome = input("> ")
     if not nome.strip():
-        print("\nCertas memórias insistem porque as culpas por trás delas nunca cessaram.")
+        SceneBridge.say("\nCertas memórias insistem porque as culpas por trás delas nunca cessaram.")
         nome = "Desolado"
     player = Player(name=nome)
-    print(f"Você será chamado de {player.name}.")
+    SceneBridge.say(f"Você será chamado de {player.name}.")
     input("\n[Pressione Enter para continuar...]")
 
     try:

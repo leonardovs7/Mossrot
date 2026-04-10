@@ -1,5 +1,4 @@
 class GameState:
-    # O dicionário onde guardaremos tudo: {"item_x": True, "boss_morto": False}
     _flags = {}
 
     @staticmethod

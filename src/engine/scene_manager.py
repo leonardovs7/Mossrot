@@ -1,5 +1,6 @@
 import time
 import sys
+import os
 import random
 from typing import List
 from src.engine.game_state import GameState
@@ -21,18 +22,16 @@ class SceneManager:
         for x in text:
             sys.stdout.write(x)
             sys.stdout.flush()
-            #delay = random.uniform(0.02, 0.05)
-            delay = 0
-            time.sleep(delay)  # Um delay mínimo para o efeito
         print()
 
     def display_scene(self, player):
+        os.system('cls' if os.name == 'nt' else 'clear')
         while True:
             spore_perc = getattr(self.current_scene, 'spore_index', None)
             if spore_perc > 0:
-                self.type_text(f"\n=== {self.current_scene.title} - [{spore_perc}% Contaminado] ===\n")
+                self.type_text(f"\n=== {self.current_scene.title} - [{spore_perc}% Contaminado] ===\n".upper())
             else:
-                self.type_text(f"\n=== {self.current_scene.title} ===\n")
+                self.type_text(f"\n=== {self.current_scene.title} ===\n".upper())
 
             description = self.current_scene.description
             if callable(description):
@@ -163,7 +162,8 @@ class SceneManager:
     def navigate(self, player):
         while player.is_alive:
             options = self.display_scene(player)
-            if not options: break
+            if not options:
+                break
 
             print("\nDigite o número, 'i' para ir ao Inventário ou 's' para ver suas Estatísticas")
             entrada = input("> ").lower().strip()
@@ -179,7 +179,7 @@ class SceneManager:
                 choice = int(entrada) - 1
                 if 0 <= choice < len(options):
                     selected = options[choice]
-
+                    #processa a escolha
                     if selected.action:
                         feedback = selected.action(player)
                         if isinstance(feedback, str):
@@ -188,10 +188,13 @@ class SceneManager:
 
                     selected.is_used = True
                     self.move_scene(selected.target_scene_id, player)
+
                 else:
                     print("❌ Opção inválida.")
+                    time.sleep(1)
             except ValueError:
                 print("❌ Comando inválido.")
+                time.sleep(1)
 
         if not player.is_alive:
             print("\n💀 A escuridão finalmente te alcançou...")

@@ -5,30 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bdb4e281-9c26-4b83-9577-1aec90088de7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/engine/scene_bridge.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/scenes/scene_09_watcher_kitchen.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/scenes/scene_10_sanatorium_fields.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/engine/scene_bridge.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/engine/scene_bridge.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/engine/scene_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/engine/scene_manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/handlers/combat_handler.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/handlers/combat_handler.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/handlers/inventory_handler.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/handlers/inventory_handler.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/handlers/shadow_ambush_handler.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/handlers/shadow_ambush_handler.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/handlers/turn_handler.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/handlers/turn_handler.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/handlers/xp_handler.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/handlers/xp_handler.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/database/item_db.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/database/item_db.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/database/scenes_db.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/database/scenes_db.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/entities/enemy.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/entities/enemy.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/entities/item.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/entities/item.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/entities/player.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/entities/player.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/scenes/scene_03_backyard_hut.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/scenes/scene_03_backyard_hut.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/scenes/scene_02_old_hut.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/scenes/scene_02_old_hut.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/scenes/scene_04_hatch.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/scenes/scene_04_hatch.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/models/scenes/scene_05_abism.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/scenes/scene_05_abism.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/scenes/scene_07_watcher_living_room.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/scenes/scene_07_watcher_living_room.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/combat_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/combat_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/heal_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/heal_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/inventory_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/inventory_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/light_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/light_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/spore_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/spore_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,13 +48,19 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;Batch.jogo.executor&quot;: &quot;Run&quot;,
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
     &quot;Python.combat_handler.executor&quot;: &quot;Run&quot;,
     &quot;Python.equipment_service.executor&quot;: &quot;Run&quot;,
+    &quot;Python.game_terminal.executor&quot;: &quot;Run&quot;,
     &quot;Python.item.executor&quot;: &quot;Run&quot;,
     &quot;Python.light_handler.executor&quot;: &quot;Debug&quot;,
     &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main_terminal.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main_teste.executor&quot;: &quot;Run&quot;,
     &quot;Python.scene_04_hatch.executor&quot;: &quot;Run&quot;,
+    &quot;Python.scene_manager.executor&quot;: &quot;Run&quot;,
+    &quot;Python.scene_manager_terminal.executor&quot;: &quot;Run&quot;,
     &quot;Python.scenes_db.executor&quot;: &quot;Run&quot;,
     &quot;Python.test.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
@@ -79,7 +71,7 @@
     &quot;ai.playground.ignore.import.keys.banner.in.settings&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Leonardo/Desktop/Python/Mossrot&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Leonardo/Desktop/Python/Mossrot/src/assets/fonts&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -90,6 +82,9 @@
   }
 }</component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Leonardo\Desktop\Python\Mossrot\src\assets\fonts" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Leonardo\Desktop\Python\Mossrot\src\models" />
       <recent name="C:\Users\Leonardo\Desktop\Python\RPG_Refatorado\src\models" />
@@ -98,7 +93,7 @@
       <recent name="C:\Users\Leonardo\Desktop\Python\RPG_Refatorado\src" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.test">
+  <component name="RunManager" selected="Python.main">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Mossrot" />
       <option name="ENV_FILES" value="" />
@@ -149,8 +144,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.test" />
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.test" />
       </list>
     </recent_temporary>
   </component>
@@ -186,7 +181,10 @@
       <workItem from="1775590049123" duration="12819000" />
       <workItem from="1775607131761" duration="9238000" />
       <workItem from="1775697988708" duration="8563000" />
-      <workItem from="1775736553254" duration="26103000" />
+      <workItem from="1775736553254" duration="27167000" />
+      <workItem from="1775824004599" duration="339000" />
+      <workItem from="1775824368559" duration="6159000" />
+      <workItem from="1775832049683" duration="6155000" />
     </task>
     <servers />
   </component>
@@ -196,13 +194,18 @@
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Mossrot$scene_04_hatch.coverage" NAME="scene_04_hatch Coverage Results" MODIFIED="1775273953937" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/models/scenes" />
     <SUITE FILE_PATH="coverage/RPG_Refatorado$combat_handler.coverage" NAME="combat_handler Coverage Results" MODIFIED="1774922701108" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/handlers" />
+    <SUITE FILE_PATH="coverage/RPG_Refatorado$main.coverage" NAME="main Coverage Results" MODIFIED="1775011285617" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/RPG_Refatorado$equipment_service.coverage" NAME="equipment_service Coverage Results" MODIFIED="1774896478407" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/services" />
+    <SUITE FILE_PATH="coverage/Mossrot$main_teste.coverage" NAME="main_teste Coverage Results" MODIFIED="1775831005379" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Mossrot$main.coverage" NAME="main Coverage Results" MODIFIED="1775837890068" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/RPG_Refatorado$light_handler.coverage" NAME="light_handler Coverage Results" MODIFIED="1774915454894" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/handlers" />
+    <SUITE FILE_PATH="coverage/Mossrot$game_terminal.coverage" NAME="game_terminal Coverage Results" MODIFIED="1775827534190" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/engine" />
     <SUITE FILE_PATH="coverage/Mossrot$scenes_db.coverage" NAME="scenes_db Coverage Results" MODIFIED="1775273562251" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/models/database" />
     <SUITE FILE_PATH="coverage/Mossrot$test.coverage" NAME="test Coverage Results" MODIFIED="1775793696382" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/RPG_Refatorado$main.coverage" NAME="main Coverage Results" MODIFIED="1775011285617" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Mossrot$main_terminal.coverage" NAME="main_terminal Coverage Results" MODIFIED="1775826667264" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Mossrot$scene_manager.coverage" NAME="scene_manager Coverage Results" MODIFIED="1775835669255" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/engine" />
+    <SUITE FILE_PATH="coverage/Mossrot$scene_manager_terminal.coverage" NAME="scene_manager_terminal Coverage Results" MODIFIED="1775826534343" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/engine" />
     <SUITE FILE_PATH="coverage/RPG_Refatorado$item.coverage" NAME="item Coverage Results" MODIFIED="1774896395878" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/entities" />
-    <SUITE FILE_PATH="coverage/RPG_Refatorado$equipment_service.coverage" NAME="equipment_service Coverage Results" MODIFIED="1774896478407" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/services" />
     <SUITE FILE_PATH="coverage/RPG_Refatorado$test.coverage" NAME="test Coverage Results" MODIFIED="1774922704821" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Mossrot$main.coverage" NAME="main Coverage Results" MODIFIED="1775789657805" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

@@ -7,19 +7,18 @@ class TurnHandler:
     @staticmethod
     def get_turn_announcement(entity) -> str:
         PLAYER_HEALTHY = [
-            f"⚔️ É a sua vez, {entity.name}. O que o brilho da sua luz revela?",
-            f"🛡️ {entity.name}, o destino aguarda seu próximo movimento entre as sombras.",
-            f"🕯️ Sua chama vacila, mas sua vontade é firme. O que fará, {entity.name}?",
-            f"👣 O chão de cinzas range sob suas botas. Ataque agora, {entity.name}!",
-            f"👁️ Você foca o olhar no inimigo. A vantagem é sua, {entity.name}."
+            f"🛡️ O destino aguarda seu próximo movimento entre as sombras.",
+            f"🕯️ Sua chama vacila, mas sua vontade é firme.",
+            f"👣 O chão de cinzas range sob suas botas.",
+            f"👁️ Você foca o olhar no inimigo. A vantagem é sua.."
         ]
 
         PLAYER_CRITICAL = [
             f"⚠️ {entity.name} está cambaleando, mas firma o passo para o próximo movimento!",
-            f"🩸 O gosto de ferro e sangue enche sua boca. Resista, {entity.name}!",
-            f"💔 Suas forças se esvaem, mas o Desolado não cai sem lutar!",
-            f"🌑 A escuridão parece mais próxima agora... lute por cada fôlego, {entity.name}!",
-            f"⚡ A dor é um aviso, não o fim. Reaja, {entity.name}!"
+            f"🩸 O gosto de ferro e sangue enche sua boca..",
+            f"💔 Suas forças se esvaem, mas você não cai sem lutar!",
+            f"🌑 A escuridão parece mais próxima agora...",
+            f"⚡ A dor é um aviso, não o fim.."
         ]
 
         ENEMY_MESSAGES = [

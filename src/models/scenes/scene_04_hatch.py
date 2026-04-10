@@ -13,13 +13,15 @@ def enter_basement(player):
         InventoryHandler.remove_item(player, "chave_porao")
     return (
         "O ar frio do porão sobe para encontrar seu rosto, carregando um cheiro metálico\n"
-        "de sangue seco misturado ao bofo de papel velho. Os degraus rangem sob seu peso como se a madeira estivesse prestes a ceder.\n\n"
+        "de sangue seco misturado ao bofo de papel velho. Os degraus rangem sob seu peso "
+        "\ncomo se a madeira estivesse prestes a ceder.\n\n"
         "Ao puxar a cordinha, a lâmpada solta um estalo elétrico e começa a emitir um\n"
         "zumbido baixo e irritante, como se estivesse sob esforço constante.\n"
         "A luz amarelada não alcança os cantos, onde sombras densas parecem se esconder da sua presença.\n"
         "\nNo centro, o chão de concreto está manchado por poças de um líquido escuro e viscoso.\n"
         "À esquerda, uma mesa de carvalho jaz coberta por uma poeira tão espessa que parece uma pele acinzentada.\n"
-        "À direita, o armário maciço parece uma sentinela mofada, com fungos brancos que lembram teias de aranha descendo pelas laterais.\n"
+        "À direita, o armário maciço parece uma sentinela mofada, com fungos brancos que lembram teias de aranha "
+        "\ndescendo pelas laterais.\n"
     )
 
 def going_table(player):

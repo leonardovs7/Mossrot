@@ -114,7 +114,7 @@ def investigate_figure(player):
         GameState.set("defeat_sentinel", True)
         return (
             f"\nA criatura desmorona em farpas e cinzas. Você recupera o item: {ambar.name}\n"
-            "📖 Dica: Este âmbar obtido permite enxergar através de névoas de musgo e revela coisas antes impossíveis de serem vistas."
+            "📖 Dica: Este âmbar obtido permite enxergar através de névoas de musgo e revela coisas que não via."
         )
     return ""
 
@@ -125,8 +125,7 @@ ABISM_FIRST_CHAMBER = GameScene(
         "raízes negras. As paredes de madeira morta exibem rostos humanos fundidos\n"
         "à casca cinzenta. O chão é coberto por uma camada espessa de cinzas e\n"
         "serragem que abafa seus passos. No centro, sob uma raiz que desce como\n"
-        "uma forca, um vulto permanece imóvel, guardando algo que brilha.\n"
-        "\n📖 Dica: O âmbar obtido permite enxergar através de névoas de musgo e revela coisas antes impossíveis de serem vistas."),
+        "uma forca, um vulto permanece imóvel, guardando algo que brilha.\n"),
     type="cave",
     options=[
         SceneOption("Seguir o caminho da paredes de madeira morta e veias fluorescentes de seiva negra.", requirement=lambda p: GameState.get("focus_active"), target_scene_id="abism_second_chamber"),
@@ -147,7 +146,7 @@ def second_chamber_description(player):
         "O som é o que mais castiga: um tamborilar rítmico, abafado e orgânico, como o coração de um gigante\n"
         "enterrado vivo sob toneladas de terra negra. Três bulbos imensos, do tamanho de tórax humanos, brilham\n"
         "com uma luz violácea e translúcida, bloqueando a única passagem visível com uma rede de tendões vivos.\n"
-        "\n📖 Dica: O âmbar obtido permite enxergar através de névoas de musgo e revela coisas antes impossíveis de serem vistas."
+        "\nDica: Este âmbar obtido permite enxergar através de névoas de musgo e revela coisas que não via."
         )
     return ("Através do brilho alaranjado do âmbar, a realidade biológica se torna transparente. Você vê que as\n"
             "raízes não cresceram sozinhas: elas seguem conduítes de cobre e canos de ferro que serpenteiam por\n"

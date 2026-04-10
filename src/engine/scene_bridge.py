@@ -17,7 +17,10 @@ class SceneBridge:
         if cls._manager:
             cls._manager.show_status(player)
 
+    @classmethod
     def say(cls, text: str):
         #usa o type_text do sceneManager para digitar com delay
         if cls._manager:
             cls._manager.type_text(text)
+        else:
+            print(text)

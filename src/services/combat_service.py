@@ -19,11 +19,11 @@ class CombatService:
 
         if isinstance(attacker, Player) and not skip_menu:
             print("\n" + "=" * 45)
-            print(f"\n[ TURNO DE {attacker.name} ]")
+            print(f"\n[ TURNO DE {attacker.name} ]\n".upper())
             start_turn_announce = TurnHandler.get_turn_announcement(attacker)
             print(f"'{start_turn_announce}'")
             print(f"❤️ HP: {attacker.hp}/{attacker.max_hp} | 🗡️ {attacker.weapon} (+{attacker.current_weapon_damage}) | 🛡️ {attacker.armor} (+{attacker.current_armor_defense * 100}%)")
-            print("\n1 - Atacar | 2 - Defender | 3 - Defender")
+            print("\n1 - Atacar | 2 - Defender | 3 - Inventário")
 
             choice = input("Escolha sua ação: \n> ")
 
@@ -108,16 +108,16 @@ class CombatService:
             if active_enemies and player.is_alive:
                 if len(active_enemies) == 1:
                     print("\n" + "=" * 45)
-                    print(f"\n[ TURNO DE {e.name} ]")
+                    print(f"\n[ TURNO DE {e.name} ]\n".upper())
                     start_turn_announce = TurnHandler.get_turn_announcement(e)
                     print(f"'{start_turn_announce}'")
-                    print(f"❤️ {e.name} - HP: {e.hp}/{e.max_hp} | 🛡️ {e.name} - (+{e.damage_reduction * 100}%)")
+                    print(f"❤️ {e.name} - HP: {e.hp}/{e.max_hp} | 🛡️ {e.name} - (+{e.damage_reduction * 100:.2f}%)")
                 else:
                     print("\n" + "=" * 45)
                     print(f"\n[ TURNO DOS INIMIGOS ]")
                     start_turn_announce = TurnHandler.get_turn_announcement(e)
                     print(f"'{start_turn_announce}'")
-                    print(f"❤️ {e.name} - HP: {e.hp}/{e.max_hp} | 🛡️ {e.name} - (+{e.damage_reduction * 100}%)")
+                    print(f"❤️ {e.name} - HP: {e.hp}/{e.max_hp} | 🛡️ {e.name} - (+{e.damage_reduction * 100:.2f}%)")
                 for e in active_enemies:
                     if player.is_alive:
                         CombatService.execute_turn(e, player)

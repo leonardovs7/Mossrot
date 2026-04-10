@@ -7,8 +7,9 @@ from src.services.combat_service import CombatService
 
 
 def handle_combat(player):
+    print("\n")
     scarecrow = Enemy(name="Espantalho Vivo", level=1, hp=3, max_hp=3, damage_reduction=0.0, base_damage=1, xp_reward=4)
-    CombatService.start_combat(player, scarecrow)
+    CombatService.start_combat(player, scarecrow, is_surprise=True)
     if player.hp > 0:
         GameState.set("scarecrow_dead", True)
         return (
