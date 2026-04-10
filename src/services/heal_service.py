@@ -1,6 +1,5 @@
 from src.handlers.inventory_handler import InventoryHandler
 
-
 class HealService:
     @staticmethod
     def heal(player, item) -> str:

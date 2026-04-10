@@ -2,27 +2,26 @@ import time
 import sys
 import random
 from typing import List
-
 from src.engine.game_state import GameState
+from src.engine.scene_bridge import SceneBridge
 from src.services.inventory_service import InventoryService
-from src.services.combat_service import CombatService
 from src.handlers.shadow_ambush_handler import ShadowAmbushHandler
 from src.models.entities.item import LightEquipment
 from src.services.light_service import LightService
 from src.services.spore_service import SporeService
 
-
 class SceneManager:
     def __init__(self, scenes: List['GameScene'], start_id: str):
         self.scenes = {s.id: s for s in scenes}
         self.current_scene = self.scenes[start_id]
+        SceneBridge.register(self)
 
     def type_text(self, text: str):
         if not text: return
         for x in text:
             sys.stdout.write(x)
             sys.stdout.flush()
-            #delay = random.uniform(0.000, 0.008)
+            #delay = random.uniform(0.02, 0.05)
             delay = 0
             time.sleep(delay)  # Um delay mínimo para o efeito
         print()
@@ -121,8 +120,8 @@ class SceneManager:
             print(f"{i} - {name_and_quantity:<35} [{item.category}]")
 
         print("\n[EQUIPAMENTOS]")
-        print(f"🗡️ Arma: {player.weapon} (+{player.current_weapon_bonus})")
-        print(f"🛡️ Armadura: {player.armor} (+{player.current_armor_bonus})")
+        print(f"🗡️ Arma: {player.weapon} (+{player.current_weapon_damage})")
+        print(f"🛡️ Armadura: {player.armor} (+{player.current_armor_defense})")
         print("\n[0] Voltar | [ID] Examinar")
 
         try:

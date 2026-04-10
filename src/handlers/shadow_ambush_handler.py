@@ -22,7 +22,7 @@ class ShadowAmbushHandler:
         hp = random.randint(1, 8) * level_mult
         defense = random.uniform(0.02, 0.06)
         damage = random.randint(1, 4)
-        xp_reward = random.randint(1, 3) * level_mult
+        xp_reward = random.randint(1, 4)
 
         enemy = Enemy(
             name=final_name,

@@ -5,19 +5,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bdb4e281-9c26-4b83-9577-1aec90088de7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/models/scenes/scene_07_watcher_living_room.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/scenes/scene_08_watcher_upstairs.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/services/spore_service.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/engine/scene_bridge.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/models/scenes/scene_09_watcher_kitchen.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/models/scenes/scene_10_sanatorium_fields.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/engine/scene_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/engine/scene_manager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/handlers/combat_handler.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/handlers/combat_handler.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/handlers/inventory_handler.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/handlers/inventory_handler.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/handlers/shadow_ambush_handler.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/handlers/shadow_ambush_handler.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/handlers/turn_handler.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/handlers/turn_handler.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/handlers/xp_handler.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/handlers/xp_handler.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/models/database/item_db.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/database/item_db.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/models/database/scenes_db.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/database/scenes_db.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/entities/enemy.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/entities/enemy.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/models/entities/item.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/entities/item.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/models/entities/player.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/entities/player.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/entities/scene.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/entities/scene.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/scenes/scene_03_backyard_hut.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/scenes/scene_03_backyard_hut.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/models/scenes/scene_05_abism.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/scenes/scene_05_abism.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/scenes/scene_06_watcher_basement.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/scenes/scene_06_watcher_basement.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/scenes/scene_07_watcher_living_room.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/scenes/scene_07_watcher_living_room.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/combat_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/combat_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/heal_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/heal_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/inventory_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/inventory_service.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/light_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/light_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/spore_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/spore_service.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -38,6 +48,9 @@
   <component name="McpProjectServerCommands">
     <commands />
     <urls />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
@@ -171,7 +184,9 @@
       <workItem from="1775403800802" duration="13410000" />
       <workItem from="1775480148724" duration="17048000" />
       <workItem from="1775590049123" duration="12819000" />
-      <workItem from="1775607131761" duration="4433000" />
+      <workItem from="1775607131761" duration="9238000" />
+      <workItem from="1775697988708" duration="8563000" />
+      <workItem from="1775736553254" duration="26103000" />
     </task>
     <servers />
   </component>
@@ -183,11 +198,11 @@
     <SUITE FILE_PATH="coverage/RPG_Refatorado$combat_handler.coverage" NAME="combat_handler Coverage Results" MODIFIED="1774922701108" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/handlers" />
     <SUITE FILE_PATH="coverage/RPG_Refatorado$light_handler.coverage" NAME="light_handler Coverage Results" MODIFIED="1774915454894" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/handlers" />
     <SUITE FILE_PATH="coverage/Mossrot$scenes_db.coverage" NAME="scenes_db Coverage Results" MODIFIED="1775273562251" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/models/database" />
-    <SUITE FILE_PATH="coverage/Mossrot$test.coverage" NAME="test Coverage Results" MODIFIED="1775611293300" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Mossrot$test.coverage" NAME="test Coverage Results" MODIFIED="1775793696382" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/RPG_Refatorado$main.coverage" NAME="main Coverage Results" MODIFIED="1775011285617" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/RPG_Refatorado$item.coverage" NAME="item Coverage Results" MODIFIED="1774896395878" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/entities" />
     <SUITE FILE_PATH="coverage/RPG_Refatorado$equipment_service.coverage" NAME="equipment_service Coverage Results" MODIFIED="1774896478407" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/services" />
     <SUITE FILE_PATH="coverage/RPG_Refatorado$test.coverage" NAME="test Coverage Results" MODIFIED="1774922704821" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Mossrot$main.coverage" NAME="main Coverage Results" MODIFIED="1775609414976" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Mossrot$main.coverage" NAME="main Coverage Results" MODIFIED="1775789657805" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

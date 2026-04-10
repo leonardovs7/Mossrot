@@ -20,7 +20,7 @@ class ItemDB:
             stackable=False,
             quantity=1,
             value=0,
-            passive_value=0
+            passive_bonus=0
         ),
 
         "pe_de_cabra": Item(
@@ -35,7 +35,7 @@ class ItemDB:
             stackable=False,
             quantity=1,
             value=0,
-            passive_value=0
+            passive_bonus=0
         ),
 
         "lamparina_musgosa": LightEquipment(
@@ -54,7 +54,7 @@ class ItemDB:
             max_fuel=100.0,
             fuel_consume=10.0,
             is_lit=False,
-            passive_value=0
+            passive_bonus=0
         ),
 
         # --- COMBATE ---
@@ -72,7 +72,7 @@ class ItemDB:
             stackable=False,
             quantity=1,
             value=2,
-            passive_value=0
+            passive_bonus=0
         ),
 
         "estilete_raiz": Item(
@@ -87,7 +87,7 @@ class ItemDB:
             stackable=False,
             quantity=1,
             value=6,
-            passive_value=2
+            passive_bonus=2
         ),
 
         #armadura
@@ -103,8 +103,26 @@ class ItemDB:
             stackable=False,
             quantity=1,
             value=0.4,
-            passive_value=0
+            passive_bonus=0
         ),
+
+        #itens de combate ativos (precisam ser usados)
+        "fragmento_calcificado": Item(
+            id="fragmento_calcificado",
+            name="Fragmento Calcificado",
+            description="Um pedaço endurecido de seiva negra e osso, extraído do crânio do Germinado.",
+            category="combat",
+            subcategory="passive",
+            is_consumable=False,
+            is_equippable=False,
+            is_equipped=False,
+            stackable=False,
+            quantity=1,
+            value=0,
+            passive_bonus=2
+        ),
+
+        #COMBUSTIVEL
 
         "caixa_fosforos": Item(
             id="caixa_fosforos",
@@ -118,10 +136,8 @@ class ItemDB:
             stackable=False,
             quantity=1,
             value=0,
-            passive_value=0
+            passive_bonus=0
         ),
-
-        #CONSUMIVEIS
 
         "oleo_carne": Item(
             id="oleo_carne",
@@ -135,7 +151,22 @@ class ItemDB:
             stackable=True,
             quantity=1,
             value=30,
-            passive_value=0
+            passive_bonus=0
+        ),
+
+        "lata_querosene": Item(
+            id="lata_querosene",
+            name="Lata de Querosene",
+            description="O frio preservou o óleo, mas o cheiro de morte que escapou da geladeira vai ficar nas suas roupas por muito tempo.",
+            category="fuel",
+            subcategory="fuel",
+            is_consumable=True,
+            is_equippable=False,
+            is_equipped=False,
+            stackable=True,
+            quantity=1,
+            value=50,
+            passive_bonus=0
         ),
 
         # --- CURA ---
@@ -151,7 +182,22 @@ class ItemDB:
             stackable=True,
             quantity=1,
             value=5,
-            passive_value=0
+            passive_bonus=0
+        ),
+
+        "flor_cinzas": Item(
+            id="flor_cinzas",
+            name="Flor de Cinzas",
+            description="Uma planta de pétalas cinzentas que cresce perto do vapor. Suas fibras derretem na língua, trazendo um breve alívio ao corpo e aos sentidos..",
+            category="heal",
+            subcategory="multiHeal",
+            is_consumable=True,
+            is_equippable=False,
+            is_equipped=False,
+            stackable=True,
+            quantity=1,
+            value=10,
+            passive_bonus=0
         ),
 
         "unguento_fibroso": Item(
@@ -166,7 +212,7 @@ class ItemDB:
             stackable=True,
             quantity=1,
             value=10,
-            passive_value=0
+            passive_bonus=0
         ),
 
         "tonico_opio": Item(
@@ -186,12 +232,12 @@ class ItemDB:
             is_equipped=False,
             quantity=1,
             value=15,
-            passive_value=0
+            passive_bonus=0
         ),
 
         "fluido_ancestral": Item(
             id="fluido_ancestral",
-            name="Extrato de Coração da Árvore Maldita",
+            name="Extrato de Coração da Seiva Maldita",
             description="O frasco está quente ao toque...",
             category="heal",
             subcategory="strongHeal",
@@ -201,7 +247,7 @@ class ItemDB:
             stackable=True,
             quantity=1,
             value=25,
-            passive_value=0
+            passive_bonus=0
         ),
 
         "sais_clinicos": Item(
@@ -216,30 +262,25 @@ class ItemDB:
             stackable=True,
             quantity=1,
             value=15,
-            passive_value=0
+            passive_bonus=0
         ),
 
         # --- LORE E CHAVES ---
-        "cicatriz_ambar": Item(
-            id="cicatriz_ambar",
-            name="Cicatriz de Âmbar",
-            description="Revela as veias de seiva negra que pulsam nas árvores mortas.",
-            category="view",
-            subcategory="view",
+
+        "chave_sanatorio": Item(
+            id="chave_sanatorio",
+            name="Chave das Galerias de Vapor",
+            description="Esta chave não abre apenas uma porta; ela abre o caminho para o centro da semente..",
+            category="util",
+            subcategory="key",
             is_consumable=False,
-            is_equippable=True,
+            is_equippable=False,
             is_equipped=False,
             stackable=False,
             quantity=1,
             value=0,
-            passive_value=0
+            passive_bonus=0
         ),
-
-        #"mapa_sanatorio_lavanderia": Item(
-        #    id="mapa_sanatorio_lavanderia",
-        #    name="Esboço da Lavanderia do Sanatório",
-        #    description="A planta da Lavanderia do Sanatória que abre espaço para locais que você não teria ciência anteriormente"
-        #)
 
         "chave_porao": Item(
             id="chave_porao",
@@ -253,8 +294,39 @@ class ItemDB:
             stackable=False,
             quantity=1,
             value=0,
-            passive_value=0
+            passive_bonus=0
+        ),
+
+        "cicatriz_ambar": Item(
+            id="cicatriz_ambar",
+            name="Cicatriz de Âmbar",
+            description="Revela as veias de seiva negra que pulsam nas árvores mortas.",
+            category="view",
+            subcategory="view",
+            is_consumable=False,
+            is_equippable=True,
+            is_equipped=False,
+            stackable=False,
+            quantity=1,
+            value=0,
+            passive_bonus=0
+        ),
+
+        "anel_latao": Item(
+            id="anel_latao",
+            name="Anel de Latão Oxidado",
+            description="Um círculo simples e pesado de latão. Na parte interna, há uma gravação feita às pressas, quase ilegível, onde se lê: '732 - Propriedade do Estado'.",
+            category="lore",
+            subcategory="lore",
+            is_consumable=False,
+            is_equippable=False,
+            is_equipped=False,
+            stackable=False,
+            quantity=1,
+            value=0,
+            passive_bonus=0
         )
+
     }
 
     @staticmethod

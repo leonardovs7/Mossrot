@@ -3,6 +3,8 @@ import sys
 import random
 from typing import List, Union
 
+from src.engine.scene_bridge import SceneBridge
+from src.handlers.turn_handler import TurnHandler
 from src.handlers.xp_handler import LevelHandler
 from src.models.entities.entity import Entity
 from src.models.entities.player import Player
@@ -13,35 +15,47 @@ from src.handlers.combat_handler import CombatHandler
 class CombatService:
     @staticmethod
     def execute_turn(attacker: Entity, defender: Entity, skip_menu: bool = False):
-        # Resetamos a defesa no início do turno (usando o padrão snake_case)
         attacker.is_defending = False
 
         if isinstance(attacker, Player) and not skip_menu:
-            print(f"\n--- Turno de {attacker.name} ---")
-            print(f"❤️ HP: {attacker.hp}/{attacker.max_hp}")
-            # Note: Verifique se 'weapon' e 'armor' são objetos ou strings no seu modelo
-            print(f"🗡️ Arma: {attacker.weapon} | 🛡️ Armadura: {attacker.armor}\n")
-            print("1 - Atacar")
-            print("2 - Defender")
+            print("\n" + "=" * 45)
+            print(f"\n[ TURNO DE {attacker.name} ]")
+            start_turn_announce = TurnHandler.get_turn_announcement(attacker)
+            print(f"'{start_turn_announce}'")
+            print(f"❤️ HP: {attacker.hp}/{attacker.max_hp} | 🗡️ {attacker.weapon} (+{attacker.current_weapon_damage}) | 🛡️ {attacker.armor} (+{attacker.current_armor_defense * 100}%)")
+            print("\n1 - Atacar | 2 - Defender | 3 - Defender")
 
             choice = input("Escolha sua ação: \n> ")
 
-            if choice == "2":
+            if choice == "1":
+                pass
+
+            elif choice == "2":
                 attacker.is_defending = True
                 print(f"🛡️ {attacker.name} entrou em postura defensiva!")
                 return
 
-                # 1. Gerar dano usando o CombatHandler
+            elif choice == "3":
+                SceneBridge.open_inventory(attacker)
+                return
+
+            else:
+                return CombatService.execute_turn(attacker, defender)
+
+        # 1. Gerar dano usando o CombatHandler
         raw_damage = CombatHandler.attack(attacker)
 
         # 2. Aplicar dano e mitigação usando o CombatHandler
-        # O CombatHandler já faz os prints de "recebeu X de dano"
-        CombatHandler.defend(defender, raw_damage)
+        CombatHandler.defend(attacker, defender, raw_damage)
+
+        #3. Adicionar lógica de dano passivo por status
+        CombatHandler.passive_effect(attacker, defender)
 
         time.sleep(1)
 
     @staticmethod
     def start_combat(player: Player, enemies: Union[Enemy, List[Enemy]], is_surprise: bool = False):
+        player.in_combat = True
         # Garante que enemies seja uma lista
         if not isinstance(enemies, list):
             enemies = [enemies]
@@ -65,7 +79,7 @@ class CombatService:
                 for i, e in enumerate(alive_enemies, 1):
                     print(f"{i} - {e.name} (HP: {e.hp}/{e.max_hp})")
 
-                print(f"\n❤️ Seu HP: {player.hp}/{player.max_hp}")
+                print(f"❤️ HP: {player.hp}/{player.max_hp} | 🗡️ {player.weapon} (+{player.current_weapon_damage}) | 🛡️ {player.armor} (+{player.current_armor_defense})")
                 target_input = input("Alvo ou 'd' para defender: \n> ").lower()
 
                 if target_input == 'd':
@@ -92,11 +106,24 @@ class CombatService:
             # --- TURNO DOS INIMIGOS ---
             active_enemies = [e for e in enemies if e.is_alive]
             if active_enemies and player.is_alive:
-                print(f"\n--- Turno dos Inimigos ---")
+                if len(active_enemies) == 1:
+                    print("\n" + "=" * 45)
+                    print(f"\n[ TURNO DE {e.name} ]")
+                    start_turn_announce = TurnHandler.get_turn_announcement(e)
+                    print(f"'{start_turn_announce}'")
+                    print(f"❤️ {e.name} - HP: {e.hp}/{e.max_hp} | 🛡️ {e.name} - (+{e.damage_reduction * 100}%)")
+                else:
+                    print("\n" + "=" * 45)
+                    print(f"\n[ TURNO DOS INIMIGOS ]")
+                    start_turn_announce = TurnHandler.get_turn_announcement(e)
+                    print(f"'{start_turn_announce}'")
+                    print(f"❤️ {e.name} - HP: {e.hp}/{e.max_hp} | 🛡️ {e.name} - (+{e.damage_reduction * 100}%)")
                 for e in active_enemies:
                     if player.is_alive:
                         CombatService.execute_turn(e, player)
                         time.sleep(0.5)
+
+        player.in_combat = False
 
         # --- FIM DE JOGO ---
         if not player.is_alive:

@@ -6,7 +6,7 @@ from src.handlers.inventory_handler import InventoryHandler
 from src.models.database.item_db import ItemDB
 from src.models.database.scenes_db import ALL_SCENES
 from src.models.entities.player import Player
-from src.services.inventory_service import InventoryService
+from src.services.inventory_service import InventoryService, WeaponArmorService
 
 
 def main():
@@ -26,13 +26,16 @@ def main():
     InventoryHandler.add_item(player, ItemDB.get_item("caixa_fosforos"))
     InventoryHandler.add_item(player, ItemDB.get_item("oleo_carne"))
     InventoryHandler.add_item(player, ItemDB.get_item("cicatriz_ambar"))
-    player.hp = 4000
-    player.max_hp = 4000
-    player.base_damage = 300
-
+    InventoryHandler.add_item(player, ItemDB.get_item("estilete_raiz"))
+    WeaponArmorService.equip_weapon(player, ItemDB.get_item("estilete_raiz"))
+    print(str(player.equipped_weapon))
+    player.hp = 25
+    player.max_hp = 25
+    player.base_damage = 10
+    GameState.set("mist_mini_boss_defeated", True)
 
     try:
-        manager = SceneManager(scenes=ALL_SCENES, start_id="watcher_upstairs")
+        manager = SceneManager(scenes=ALL_SCENES, start_id="sanatorium_fields")
         manager.navigate(player)
 
     except KeyboardInterrupt:

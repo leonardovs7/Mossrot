@@ -52,7 +52,7 @@ def see_photos(player):
 
 WATCHER_LIVING_ROOM = GameScene(
     id="watcher_living_room",
-    title="Sala de Estar do Observador",
+    title="A Sala de Estar do Observador",
     description=("O que um dia foi um ambiente de conforto, agora é um mausoléu de lembranças apodrecidas.\n"
                 "O papel de parede floral está descolando como pele morta,\n"
                 "revelando manchas de mofo negro que parecem pulsar em um ritmo lento.\n"
@@ -63,7 +63,7 @@ WATCHER_LIVING_ROOM = GameScene(
     spore_index=15,
     options=[
         SceneOption("Dedilhar as lombadas da estante de carvalho em decomposição", action=seek_bookshelf, target_scene_id="watcher_living_room"),
-        SceneOption("Explorar a superfície rasgada do sofá de veludo", action=seek_couch, target_scene_id="watcher_living_room"),
+        SceneOption("Explorar a superfície rasgada do sofá de veludo", only_once=True, action=seek_couch, target_scene_id="watcher_living_room"),
         SceneOption("Verificar o vidro quebrado do porta-retrato sobre a lareira", action=see_photos, target_scene_id="watcher_living_room"),
         SceneOption("Desafiar a garganta escura da escadaria que leva ao andar de cima", action=lambda p: print("Cada degrau emite um gemido de protesto sob suas botas, como se a madeira estivesse viva e sentindo o seu peso.\n"
                                                                                                          "A escuridão lá em cima não é apenas a ausência de luz; é uma massa densa que parece vibrar com o latejar das raízes\n"

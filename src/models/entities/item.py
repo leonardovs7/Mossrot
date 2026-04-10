@@ -12,7 +12,7 @@ class Item:
     is_equippable: bool #o item é equipavel
     is_equipped: bool #o item esta equipado
     value: int #valor de atributo do item
-    passive_value: int #valor de atributo de status passivo
+    passive_bonus: int #valor de atributo de status passivo
     stackable: bool #se o item é estacavel
     quantity: int #qtd de itens iguais no inv
 

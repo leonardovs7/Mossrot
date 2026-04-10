@@ -35,9 +35,12 @@ class InventoryHandler:
                 print(f"[-] {entity.name} consumiu {amount}x {item.name}. Restam {item.quantity}.")
                 return True
             else:
-                # Se a quantidade for igual ou menor, removemos o slot inteiro
                 entity.inventory.remove(item)
-                print(f"[-] {entity.name} esgotou o estoque de {item.name}.")
+                if item.stackable:
+                # Se a quantidade for igual ou menor, removemos o slot inteiro
+                    print(f"[-] {entity.name} esgotou o estoque de {item.name}.")
+                else:
+                    print(f"[-] {entity.name} usou o {item.name}.")
                 return True
 
         @staticmethod

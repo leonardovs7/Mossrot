@@ -97,7 +97,7 @@ class LightService:
         light_item = next((i for i in player.inventory if isinstance(i, LightEquipment)), None)
 
         if light_item:
-            light_item.fuel = fuelAmount
+            light_item.fuel = min(light_item.max_fuel, light_item.fuel + fuelAmount)
             light_item.is_lit = True
             player.has_light = True
             return f">> A {light_item.name} brilha novamente! [+{fuelAmount} de combustível]"

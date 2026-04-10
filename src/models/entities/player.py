@@ -7,8 +7,8 @@ from src.models.entities.item import Item
 @dataclass
 class Player(Entity):
     # --- Status Básicos ---
-    hp: int = 10
-    max_hp: int = 10
+    hp: int = 15
+    max_hp: int = 15
     level: int = 1
     base_damage: int = 4
     damage_reduction: float = 0.0
@@ -17,7 +17,9 @@ class Player(Entity):
     # --- Equipamentos
     weapon: str = "Mãos Machucadas"
     armor: str = "Roupas Velhas"
+    current_weapon_damage: int = 0
     current_weapon_bonus: int = 0
+    current_armor_defense: int = 0
     current_armor_bonus: int = 0
 
     # --- Sanidade (Mecânica de Terror) ---
@@ -34,6 +36,7 @@ class Player(Entity):
     has_light: bool = False
 
     # --- Propriedades Dinâmicas  ---
+    in_combat: bool = False
 
     @property
     def next_level_xp(self) -> int:

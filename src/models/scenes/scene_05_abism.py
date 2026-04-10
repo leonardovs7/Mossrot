@@ -23,8 +23,8 @@ def no_entrance(player):
 
 def verify_lamp(player):
     if InventoryHandler.has_item_by_id(player, "lamparina_musgosa"):
-        lantern = ItemDB.get_item("lamparina_musgosa")
-        if not lantern.is_lit:
+        lantern = InventoryHandler.get_item_by_id(player, "lamparina_musgosa")
+        if lantern and not lantern.is_lit:
             print(f"Deseja acender a {lantern.name}?")
             print("\n[1] Sim \n[2] Não")
             choice = input("> ")
@@ -37,7 +37,9 @@ def verify_lamp(player):
               "O caminho à frente está visível, mas a cada passo a escuridão\n"
               "parece mais densa, tentando sufocar a sua pequena chama.")
                 return "abism_first_chamber"
-            else:
+        elif lantern and lantern.is_lit:
+            return "abism_first_chamber"
+        else:
                return no_entrance(player)
     else:
         return no_entrance(player)
@@ -68,7 +70,6 @@ def see_faces_wall(player):
     return
 
 def seek_necrotic_hole(player):
-    # Risco e Recompensa: Pode achar óleo, mas pode levar dano de farpa
     print("\nVocê enfia a mão em uma fenda entre troncos que parecem costelas secas.")
     time.sleep(1)
 
@@ -108,6 +109,8 @@ def investigate_figure(player):
     if player.is_alive:
         ambar = ItemDB.get_item("cicatriz_ambar")
         InventoryHandler.add_item(player, ambar)
+        feedback = InventoryService.use(player, ambar)
+        print(feedback)
         GameState.set("defeat_sentinel", True)
         return (
             f"\nA criatura desmorona em farpas e cinzas. Você recupera o item: {ambar.name}\n"
@@ -122,7 +125,8 @@ ABISM_FIRST_CHAMBER = GameScene(
         "raízes negras. As paredes de madeira morta exibem rostos humanos fundidos\n"
         "à casca cinzenta. O chão é coberto por uma camada espessa de cinzas e\n"
         "serragem que abafa seus passos. No centro, sob uma raiz que desce como\n"
-        "uma forca, um vulto permanece imóvel, guardando algo que brilha.\n"),
+        "uma forca, um vulto permanece imóvel, guardando algo que brilha.\n"
+        "\n📖 Dica: O âmbar obtido permite enxergar através de névoas de musgo e revela coisas antes impossíveis de serem vistas."),
     type="cave",
     options=[
         SceneOption("Seguir o caminho da paredes de madeira morta e veias fluorescentes de seiva negra.", requirement=lambda p: GameState.get("focus_active"), target_scene_id="abism_second_chamber"),
@@ -142,7 +146,8 @@ def second_chamber_description(player):
         "As paredes aqui não são de pedra fria, mas de uma biomassa que pulsa com um calor febril e doentio.\n"
         "O som é o que mais castiga: um tamborilar rítmico, abafado e orgânico, como o coração de um gigante\n"
         "enterrado vivo sob toneladas de terra negra. Três bulbos imensos, do tamanho de tórax humanos, brilham\n"
-        "com uma luz violácea e translúcida, bloqueando a única passagem visível com uma rede de tendões vivos."
+        "com uma luz violácea e translúcida, bloqueando a única passagem visível com uma rede de tendões vivos.\n"
+        "\n📖 Dica: O âmbar obtido permite enxergar através de névoas de musgo e revela coisas antes impossíveis de serem vistas."
         )
     return ("Através do brilho alaranjado do âmbar, a realidade biológica se torna transparente. Você vê que as\n"
             "raízes não cresceram sozinhas: elas seguem conduítes de cobre e canos de ferro que serpenteiam por\n"
@@ -222,7 +227,7 @@ def puzzle_description(player):
         return ("Você se posiciona diante da parede de carne. O calor é opressor e o som das 'batidas' faz seus dentes vibrarem.\n"
         "Para abrir caminho, você precisa tocar os três bulbos na ordem em que a vida flui pelo Abismo.\n"
         "Toque o bulbo errado, e a dissonância atingirá seu sistema nervoso como um chicote elétrico.\n")
-    return ("\nVocê se posiciona diante da parede de carne. O calor é opressor e o som das 'batidas' faz seus dentes vibrarem.\n"
+    return ("Você se posiciona diante da parede de carne. O calor é opressor e o som das 'batidas' faz seus dentes vibrarem.\n"
         "Para abrir caminho, você precisa tocar os três bulbos na ordem em que a vida flui pelo Abismo.\n"
         "Toque o bulbo errado, e a dissonância atingirá seu sistema nervoso como um chicote elétrico.\n"
         "\nAtravés da lente alaranjada, você vê trilhas de luz negra conectando os bulbos.\n"
@@ -308,32 +313,32 @@ def read_creepy_photos(player):
 
     msg = (
         "\nVocê remove uma camada de limo que parece couro velho de cima de uma pilha de cartões.\n"
-        "São fotografias em preto e branco, impressas em papel de brometo de prata, "
-        "com as bordas roídas por uma umidade ácida.\n"
+        "\nSão fotografias em preto e branco, impressas em papel de brometo de prata, "
+        "\ncom as bordas roídas por uma umidade ácida.\n"
         "\n--- 🎞️ ARQUIVO DE OBSERVAÇÃO ---\n"
     )
 
     # Foto 1: Horror Clínico
     msg += (
         "\n1. Uma foto de um paciente amarrado a uma cadeira de metal galvanizado. "
-        "Seus olhos estão cobertos por gazes pesadas, mas o que choca é o 'Limo' que "
-        "escorre por baixo das bandagens como se fossem lágrimas negras. No verso: 'Paciente 732 - Reação à Fase 2'.\n"
+        "\nSeus olhos estão cobertos por gazes pesadas, mas o que choca é o 'Limo' que "
+        "\nescorre por baixo das bandagens como se fossem lágrimas negras. No verso: 'Paciente 732 - Reação à Fase 2'.\n"
     )
 
     # Foto 2: O Diretor (Estilo Sanctum)
     msg += (
         "\n2. Uma foto de grupo da equipe médica em frente ao Sanatório. Todos sorriem, "
-        "exceto o homem no centro. O rosto dele foi meticulosamente raspado com uma lâmina, "
-        "deixando apenas um buraco branco no papel onde deveria estar sua face. Ele segura "
-        "uma bengala com um pomo em forma de raiz.\n"
+        "\nexceto o homem no centro. O rosto dele foi meticulosamente raspado com uma lâmina, "
+        "\ndeixando apenas um buraco branco no papel onde deveria estar sua face. Ele segura "
+        "\numa bengala com um pomo em forma de raiz.\n"
     )
 
     # Foto 3: O Próprio Nexo
     msg += (
         "\n3. Esta foto é recente. Ela mostra a escada de madeira onde você está agora. "
-        "No topo da escada, um vulto humanoide observa a câmera. O vulto não tem pele, "
-        "apenas músculos expostos e musgo crescendo onde deveria ser o cabelo. "
-        "A legenda diz: 'Ele voltou para casa'."
+        "\nNo topo da escada, um vulto humanoide observa a câmera. O vulto não tem pele, "
+        "\napenas músculos expostos e musgo crescendo onde deveria ser o cabelo. "
+        "\nA legenda diz: 'Ele voltou para casa'."
     )
 
     msg += "\n\n⚠️ O peso daquelas imagens penetra em sua mente. [-8 Sanidade]"
@@ -353,10 +358,11 @@ ABISM_THIRD_CHAMBER = GameScene(
                 "exibindo rostos de pacientes com olhos vendados e sorrisos costurados — fragmentos de memórias que escaparam do Sanatório.\n"),
     type="cave",
     options=[
-        SceneOption("Focar sua consciência ao brilho da Cicatriz de Âmba", action=toggle_amber_vision, target_scene_id="abism_third_chamber"),
+        SceneOption("Focar sua consciência ao brilho da Cicatriz de Âmbar", requirement=lambda p: not GameState.get("focus_active"), action=toggle_amber_vision, target_scene_id="abism_third_chamber"),
         SceneOption("Segredo: Descascar a crosta de limo sobre os retratos esquecidos",
                             requirement=lambda p: GameState.get("focus_active"),
                             action=read_creepy_photos,
+                            only_once=True,
                             target_scene_id="abism_third_chamber"),
         SceneOption("Escalar as raizes podres em direção ao Porão", target_scene_id="watcher_basement"),
         SceneOption("Retornar ao latejar constante do Átrio das Artérias", target_scene_id="abism_second_chamber")

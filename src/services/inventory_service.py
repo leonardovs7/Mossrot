@@ -24,7 +24,8 @@ class WeaponArmorService:
         player.equipped_weapon = item
         player.weapon = item.name
         player.base_damage = player.base_damage + item.value
-        player.current_weapon_bonus = item.value
+        player.current_weapon_damage = item.value
+        player.current_weapon_bonus = item.passive_bonus
 
         # 4. Remove a arma nova da mochila
         InventoryHandler.remove_item(player, item)
@@ -49,11 +50,12 @@ class WeaponArmorService:
         player.equipped_armor = item
         player.armor = item.name
         player.damage_reduction = player.damage_reduction + item.value
-        player.current_armor_bonus = item.value
+        player.current_armor_defense = item.value
+        player.current_armor_bonus = item.passive_bonus
 
         # 4. Remove da mochila
         InventoryHandler.remove_item(player, item)
-        percent = int(player.current_armor_bonus * 100)
+        percent = int(player.current_armor_defense * 100)
 
         return feedback + f"Você vestiu {item.name}. (Defesa: +{percent}%)"
 

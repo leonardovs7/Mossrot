@@ -12,14 +12,14 @@ class LevelHandler:
         player.level += 1
 
         # 3. Evolução de Atributos
-        player.max_hp += 2
+        player.max_hp += 5
         player.hp = player.max_hp  # Cura total ao upar
         player.base_damage += 1
 
         print("\n" + "⭐" * 15)
         print(f"NÍVEL AUMENTOU: {player.level}")
         print(f"Sua vontade se fortalece nas sombras...")
-        print(f"Vida Máxima: {player.max_hp} (+2)")
+        print(f"Vida Máxima: {player.max_hp} (+5)")
         print(f"Dano Base:   {player.base_damage} (+1)")
         print(f"XP para o próximo: {player.next_level_xp}")
         print("⭐" * 15 + "\n")
