@@ -1,105 +1,117 @@
 from src.engine.game_state import GameState
 from src.handlers.inventory_handler import InventoryHandler
+from src.models.database.item_db import ItemDB
 from src.services.heal_service import HealService
 from src.services.light_service import LightService
 from src.services.sanity_service import SanityService
+from src.models.enums import ItemCategory, ItemSubcategory
 
 
 class WeaponArmorService:
 
     @staticmethod
     def equip_weapon(player, item) -> str:
-        if item.category != "weapon":
+        # Validação usando Enum
+        if item.category != ItemCategory.WEAPON:
             return f"❌ {item.name} não possui o peso de uma arma."
 
         feedback = ""
 
-        # 2. Lógica de Troca (Swap)
+        # Lógica de Troca (Swap)
         if hasattr(player, 'equipped_weapon') and player.equipped_weapon:
             old_weapon = player.equipped_weapon
             InventoryHandler.add_item(player, old_weapon)
             feedback = f"Você guardou {old_weapon.name}. "
 
-        # 3. Substituição de Valores
+        # Substituição de Valores
         player.equipped_weapon = item
         player.weapon = item.name
         player.base_damage = player.base_damage + item.value
         player.current_weapon_damage = item.value
         player.current_weapon_bonus = item.passive_bonus
 
-        # 4. Remove a arma nova da mochila
         InventoryHandler.remove_item(player, item)
 
         return feedback + f"Você agora empunha {item.name}. (Dano: +{item.value})"
 
     @staticmethod
     def equip_armor(player, item) -> str:
-        # 1. Validação
-        if item.category != "armor":
+        # Validação usando Enum
+        if item.category != ItemCategory.ARMOR:
             return f"❌ {item.name} não serve como proteção."
 
         feedback = ""
 
-        # 2. Lógica de Troca
+        # Lógica de Troca
         if hasattr(player, 'equipped_armor') and player.equipped_armor:
             old_armor = player.equipped_armor
             InventoryHandler.add_item(player, old_armor)
             feedback = f"Você removeu {old_armor.name}. "
 
-        # 3. Substituição de Valores
+        # Substituição de Valores
         player.equipped_armor = item
         player.armor = item.name
         player.damage_reduction = player.damage_reduction + item.value
         player.current_armor_defense = item.value
         player.current_armor_bonus = item.passive_bonus
 
-        # 4. Remove da mochila
         InventoryHandler.remove_item(player, item)
         percent = int(player.current_armor_defense * 100)
 
         return feedback + f"Você vestiu {item.name}. (Defesa: +{percent}%)"
 
+
 class InventoryService:
     @staticmethod
     def use(player, item) -> str:
         """
-        O 'Maestro' do uso de itens.
-        Decide qual serviço chamar e devolve a mensagem de feedback.
+        O 'Maestro' do uso de itens utilizando match/case para categorias e subcategorias.
         """
+        if isinstance(item, str):
+            item_id = item
+            item = ItemDB.get_item(item_id)
 
-        # 1. Itens de Consumo (Cura)
-        if item.category == "heal" and not item.subcategory == "sanityHeal" and not item.subcategory == "multiHeal":
-            return HealService.heal(player, item)
+            if not item:
+                return f"❌ Erro sistêmico: O item '{item_id}' não foi encontrado no banco de dados."
 
-        # 1.1 Itens de Consumo (Sanidade)
-        if item.category == "heal" and item.subcategory == "sanityHeal":
-            return SanityService.increase_sanity(player, item.value)
+        # O Maestro entra em cena
+        match item.category:
 
-        # 1.2 Itens de Consumo com buff múltiplo
-        if item.subcategory == "multiHeal":
-            return f"{SanityService.increase_sanity(player, item.value)} \nAlém disso, {HealService.heal(player, item).lower()}"
+            case ItemCategory.HEAL:
+                # Se for HYBRID (HP + Sanidade), processa ambos
+                if item.subcategory == ItemSubcategory.HYBRID:
+                    res_sanity = SanityService.increase_sanity(player, item.value)
+                    res_heal = HealService.heal(player, item)
+                    return f"{res_sanity} \nAlém disso, {res_heal.lower()}"
 
-        # 2. Itens de Utilidade (Luz/Sanidade)
-        if item.category == "light":
-            return LightService.light_up(player, item)
+                # Se for STANDARD, apenas cura HP
+                return HealService.heal(player, item)
 
-        if item.category == "fuel":
-            return LightService.refuel(player, item)
+            case ItemCategory.SANITY:
+                return SanityService.increase_sanity(player, item.value)
 
-        # 3. Equipamentos (Armas e Armaduras)
-        if item.category == "weapon":
-            return WeaponArmorService.equip_weapon(player, item)
+            case ItemCategory.LIGHT:
+                return LightService.light_up(player, item)
 
-        if item.category == "armor":
-            return WeaponArmorService.equip_armor(player, item)
+            case ItemCategory.FUEL:
+                return LightService.refuel(player, item)
 
-        # 4. Item de Visualização
-        if item.category == "view":
-            if not GameState.get("focus_active"):
-                GameState.set("focus_active", True)
-                return ("Você ergue o Âmbar. A realidade se dobra, revelando o fluxo da seiva negra nas paredes."
-                        "\n> Novas Opções Liberadas!")
-            return "Você já está concentrado e enxergando mais do que deveria ser possível ver.."
+            case ItemCategory.WEAPON:
+                return WeaponArmorService.equip_weapon(player, item)
 
-        # 5. Caso o item não tenha uma função implementada
-        return f"Você observa o {item.name}, mas não sabe como usá-lo agora..."
+            case ItemCategory.ARMOR:
+                return WeaponArmorService.equip_armor(player, item)
+
+            case ItemCategory.VIEW:
+                if item.subcategory == ItemSubcategory.UNIQUE:
+                    if not GameState.get("focus_active"):
+                        GameState.set("focus_active", True, immutable=False)
+                        return (
+                            "Você ergue o Âmbar. A realidade se dobra, revelando o fluxo da seiva negra nas paredes."
+                            "\n> Novas Opções Liberadas!")
+                    return "Você já está concentrado e enxergando mais do que deveria ser possível ver.."
+                return f"Você observa o {item.name}, mas nada acontece."
+
+            case _:
+                # Engloba KEY, LORE e qualquer outra coisa sem uso ativo
+                return f"Você observa o {item.name}, mas não sabe como usá-lo agora..."

@@ -11,7 +11,8 @@ class SceneBridge:
         #acessa o inventario do manager registrado.
         if cls._manager:
             cls._manager.show_inventory(player)
-
+            
+    @classmethod
     def open_status(cls, player):
         #acessa o status do manager registrado.
         if cls._manager:

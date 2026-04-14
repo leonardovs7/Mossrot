@@ -1,17 +1,19 @@
 import random
 import time
-
+from typing import Optional
 from src.engine.game_state import GameState
 from src.handlers.inventory_handler import InventoryHandler
 from src.models.database.item_db import ItemDB
 from src.models.entities.enemy import Enemy
+from src.models.entities.item import LightEquipment
 from src.models.entities.scene import GameScene, SceneOption
+from src.models.enums import SceneType
 from src.services.combat_service import CombatService
 from src.services.inventory_service import InventoryService
 from src.services.sanity_service import SanityService
 
 
-def no_entrance(player):
+def no_entrance():
     print("\nVocê tenta dar um passo, mas a escuridão é um muro sólido.\n"
           "O frio do Limo rasteja pelas suas pernas e o pânico aperta o peito.\n"
           "Sem luz, avançar é suicídio. Seus instintos gritam para você\n"
@@ -23,7 +25,8 @@ def no_entrance(player):
 
 def verify_lamp(player):
     if InventoryHandler.has_item_by_id(player, "lamparina_musgosa"):
-        lantern = InventoryHandler.get_item_by_id(player, "lamparina_musgosa")
+        lantern: Optional[LightEquipment] = InventoryHandler.get_item_by_id(player, "lamparina_musgosa")
+        GameState.set("after_entrance", True)
         if lantern and not lantern.is_lit:
             print(f"Deseja acender a {lantern.name}?")
             print("\n[1] Sim \n[2] Não")
@@ -32,17 +35,20 @@ def verify_lamp(player):
                 feedback = InventoryService.use(player, lantern)
                 print(feedback)
                 print("Aquela fraca, porém intensa, luz revela que o musgo nas paredes não está\n"
-              "apenas crescendo — ele está digerindo a pedra. Sob o brilho,\n"
-              "as sombras se retorcem freneticamente, como vermes fugindo.\n\n"
-              "O caminho à frente está visível, mas a cada passo a escuridão\n"
-              "parece mais densa, tentando sufocar a sua pequena chama.")
+                "apenas crescendo — ele está digerindo a pedra. Sob o brilho,\n"
+                "as sombras se retorcem freneticamente, como vermes fugindo.\n\n"
+                "O caminho à frente está visível, mas a cada passo a escuridão\n"
+                "parece mais densa, tentando sufocar a sua pequena chama.")
                 return "abism_first_chamber"
+            elif choice == "2":
+                return "dense_florest_attack"
+            return None
         elif lantern and lantern.is_lit:
             return "abism_first_chamber"
         else:
-               return no_entrance(player)
+               return no_entrance()
     else:
-        return no_entrance(player)
+        return no_entrance()
 
 LIME_ABISM = GameScene(
     id="lime_abism",
@@ -60,8 +66,8 @@ LIME_ABISM = GameScene(
 # PRIMEIRA CÂMARA
 
 def see_faces_wall(player):
-    sanityReducing = random.randint(1, 5)
-    feedback = SanityService.reduce_sanity(player, sanityReducing)
+    sanity_reducing = random.randint(1, 5)
+    feedback = SanityService.reduce_sanity(player, sanity_reducing)
     print("\nVocê aproxima a luz das paredes. Não é ilusão: os rostos na casca cinzenta\n"
         "têm dentes de madeira e olhos feitos de nós de árvore. Eles parecem ter sido\n"
         "absorvidos vivos. Uma inscrição feita com unhas arrancadas na madeira diz:\n"
@@ -75,17 +81,16 @@ def seek_necrotic_hole(player):
 
     if random.random() < 0.15:
         player.hp -= 3
-        return "⚠️ Uma farpa de madeira necrótica perfura sua palma. Dói como fogo. [-3 HP]"
+        return "Uma farpa de madeira necrótica perfura sua palma. Dói como fogo. [-3 HP]"
 
     if not InventoryHandler.has_item_by_id(player, "oleo_carne"):
         InventoryHandler.add_item(player, ItemDB.get_item("oleo_carne"))
-        return "🔎 Você encontra um frasco de piche vegetal. Serve como combustível bruto."
+        return "Você encontra um frasco de piche vegetal. Serve como combustível bruto."
 
-    return "🔎 A fenda está vazia, restando apenas serragem e pó cinzento."
+    return "A fenda está vazia, restando apenas serragem e pó cinzento."
 
 def investigate_figure(player):
-    # O clímax que construímos
-    print("\n sob a raiz em forma de forca parece o epicentro do frio.")
+    print("\nSob a raiz em forma de forca parece o epicentro do frio.")
     print("O silêncio aqui é absoluto, quebrado apenas pelo estalo da sua própria pele ressecando.")
     print("\nDeseja realmente tocar no vulto para investigar?")
     print("[1] Sim \n[2] Não")
@@ -114,25 +119,36 @@ def investigate_figure(player):
         GameState.set("defeat_sentinel", True)
         return (
             f"\nA criatura desmorona em farpas e cinzas. Você recupera o item: {ambar.name}\n"
-            "📖 Dica: Este âmbar obtido permite enxergar através de névoas de musgo e revela coisas que não via."
+            "Dica: Este âmbar obtido permite enxergar através de névoas de musgo e revela coisas que não via."
         )
     return ""
+
+def description_first_chamber(player):
+    if InventoryHandler.has_item_by_id(player, "cicatriz_ambar"):
+        return ("Um salão vasto e sufocante, onde o teto desaparece em um emaranhado de\n"
+        "raízes negras. As paredes de madeira morta exibem rostos humanos fundidos\n"
+        "à casca cinzenta. O chão é coberto por uma camada espessa de cinzas e\n"
+        "serragem que abafa seus passos. No centro, sob uma raiz que desce como\n"
+        "uma forca, um vulto permanece imóvel, guardando algo que brilha.\n"
+        "\nCom a visão focada no brilho da Cicatriz de Âmbar você enxerga\n"
+        "um caminho marcado pelo pulsar fluorescente das veias de seiva negra.\n")
+    return ("Um salão vasto e sufocante, onde o teto desaparece em um emaranhado de\n"
+        "raízes negras. As paredes de madeira morta exibem rostos humanos fundidos\n"
+        "à casca cinzenta. O chão é coberto por uma camada espessa de cinzas e\n"
+        "serragem que abafa seus passos. No centro, sob uma raiz que desce como\n"
+        "uma forca, um vulto permanece imóvel, guardando algo que brilha.\n")
 
 ABISM_FIRST_CHAMBER = GameScene(
     id="abism_first_chamber",
     title="O Átrio das Cascas",
-    description=("Um salão vasto e sufocante, onde o teto desaparece em um emaranhado de\n"
-        "raízes negras. As paredes de madeira morta exibem rostos humanos fundidos\n"
-        "à casca cinzenta. O chão é coberto por uma camada espessa de cinzas e\n"
-        "serragem que abafa seus passos. No centro, sob uma raiz que desce como\n"
-        "uma forca, um vulto permanece imóvel, guardando algo que brilha.\n"),
-    type="cave",
+    description=description_first_chamber,
+    type=SceneType.DARK,
     options=[
-        SceneOption("Seguir o caminho da paredes de madeira morta e veias fluorescentes de seiva negra.", requirement=lambda p: GameState.get("focus_active"), target_scene_id="abism_second_chamber"),
+        SceneOption("Seguir pelas paredes de madeira pútrida, rastreando o pulsar fluorescente das veias de seiva negra.", requirement=lambda p: GameState.get("focus_active"), target_scene_id="abism_second_chamber"),
         SceneOption("Vasculhar fendas em busca de suprimentos", action=seek_necrotic_hole, only_once=True, target_scene_id="abism_first_chamber"),
         SceneOption("Observar os rostos fundidos nas paredes", action=see_faces_wall, only_once=True, target_scene_id="abism_first_chamber"),
-        SceneOption("Investigar o vulto sob a raiz central", only_once=True, action=investigate_figure,target_scene_id="abism_first_chamber"),
-        SceneOption("Recuar para a entrada da caverna", target_scene_id="dense_florest")
+        SceneOption("Investigar o vulto sob a raiz central", requirement=lambda p: not InventoryHandler.has_item_by_id(p, "cicatriz_ambar"), action=investigate_figure,target_scene_id="abism_first_chamber"),
+        SceneOption("Recuar para a entrada da caverna", target_scene_id="dense_florest_attack")
     ]
 )
 
@@ -167,7 +183,7 @@ def scavenge_artery_piles(player):
     print("\nVocê vasculha uma pilha de sedimentos e ossos que o Limo não conseguiu digerir.\n")
     cura = ItemDB.get_item("unguento_fibroso")
     oleo = ItemDB.get_item("oleo_carne")
-    print(f"🔎 Entre dentes e terra, você resgata: {cura.name} e {oleo.name}.")
+    print(f"Entre dentes e terra, você resgata: {cura.name} e {oleo.name}.")
     InventoryHandler.add_item(player, cura)
     InventoryHandler.add_item(player, oleo)
     return
@@ -179,7 +195,7 @@ def find_hidden_medical_kit(player):
     InventoryHandler.add_item(player, item_medico)
     # Bônus de Sanidade por encontrar "esperança"
     player.sanity = min(player.max_sanity, player.sanity + 15)
-    return f"✨ Você resgatou um {item_medico.name}. Sentir o metal frio da civilização acalma seus nervos. [+15 Sanidade]"
+    return f"Você resgatou um {item_medico.name}. Sentir o metal frio da civilização acalma seus nervos. [+15 Sanidade]"
 
 
 def reveal_pulse_weakness(player):
@@ -189,14 +205,15 @@ def reveal_pulse_weakness(player):
 
     # Mecânica útil: O próximo combate ou puzzle fica 50% mais fácil
     GameState.set("pulse_hint_revealed", True)
-    return "👁️ Você agora entende o fluxo. O próximo desafio de sincronia não oferecerá resistência."
+    return "Você agora entende o fluxo. O próximo desafio de sincronia não oferecerá resistência."
 
 ABISM_SECOND_CHAMBER = GameScene(
     id="abism_second_chamber",
     title="O Átrio das Artérias",
     description=second_chamber_description,
-    type="cave",
+    type=SceneType.DARK,
     options=[
+        SceneOption("Focar sua consciência ao brilho da Cicatriz de Âmbar", action=lambda p: InventoryService.use(p,"cicatriz_ambar"), requirement= lambda p: not GameState.get("focus_active"), target_scene_id="abism_second_chamber"),
         SceneOption("Ler a prancheta de metal encravada na raiz", action=read_research_notes, only_once=True, target_scene_id="abism_second_chamber"),
         SceneOption("Vasculhar as pilhas de detritos orgânicos", action=scavenge_artery_piles, only_once=True, target_scene_id="abism_second_chamber"),
         SceneOption(
@@ -253,14 +270,14 @@ def interact_bulb(player, bulb_number):
         if GameState.get("puzzle_step") == 3:
             GameState.set("abism_puzzle_solved", True)
             return (
-                "\n✨ HARMONIA ALCANÇADA!\n"
+                "\nHARMONIA ALCANÇADA!\n"
                 "Ao tocar o último nó, um som agudo de cristal se partindo ecoa pela câmara.\n"
                 "A parede de músculos central se contrai violentamente, desabando em uma pilha de\n"
                 "matéria orgânica flácida. O cheiro de decomposição é forte, mas o caminho para\n"
-                "a Terceira Câmara está finalmente aberto."
+                "a Terceira Câmara está finalmente aberta."
             )
 
-        return "🎶 O bulbo emite um zumbido baixo e satisfatório. A vibração na sala parece se acalmar levemente."
+        return "O bulbo emite um zumbido baixo e satisfatório. A vibração na sala parece se acalmar levemente."
 
     else:
         # ERROU A SEQUÊNCIA
@@ -273,7 +290,7 @@ def interact_bulb(player, bulb_number):
         SanityService.reduce_sanity(player, dano_sanidade)
 
         return (
-            f"\n⚠️ DISSONÂNCIA!\n"
+            f"\nDISSONÂNCIA!\n"
             f"Ao tocar o bulbo fora de sincronia, uma descarga de seiva fervente explode contra sua mão.\n"
             f"O grito da caverna ressoa dentro da sua própria cabeça, bagunçando seus pensamentos.\n"
             f"Você é lançado para trás. O ciclo foi resetado. [-{dano_hp} HP / -{dano_sanidade} Sanidade]"
@@ -283,9 +300,10 @@ ABISM_SECOND_CHAMBER_PUZZLE = GameScene(
     id="start_artery_puzzle",
     title="O Plexo Pulsante",
     description=puzzle_description,
-    type="cave",
+    type=SceneType.DARK,
     options=[
-        SceneOption("Descer para a Terceira Câmara", requirement=lambda p: GameState.get("abism_puzzle_solved"), target_scene_id="abism_third_chamber"),
+        SceneOption("Focar sua consciência ao brilho da Cicatriz de Âmbar", action=lambda p: InventoryService.use(p, "cicatriz_ambar"), requirement= lambda p: not GameState.get("focus_active"), target_scene_id="start_artery_puzzle"),
+        SceneOption("Seguir para a Terceira Câmara", requirement=lambda p: GameState.get("abism_puzzle_solved"), target_scene_id="abism_third_chamber"),
         SceneOption("Tocar o Bulbo da Esquerda (Pulsar Rápido)", requirement=lambda p: not GameState.get("abism_puzzle_solved"), action=lambda p: interact_bulb(p, 1), target_scene_id="start_artery_puzzle"),
         SceneOption("Tocar o Bulbo da Direita (Pulsar Lento)", requirement=lambda p: not GameState.get("abism_puzzle_solved"), action=lambda p: interact_bulb(p, 2), target_scene_id="start_artery_puzzle"),
         SceneOption("Tocar o Bulbo do Teto (Pulsar Errático)", requirement=lambda p: not GameState.get("abism_puzzle_solved"), action=lambda p: interact_bulb(p, 3), target_scene_id="start_artery_puzzle"),
@@ -314,7 +332,7 @@ def read_creepy_photos(player):
         "\nVocê remove uma camada de limo que parece couro velho de cima de uma pilha de cartões.\n"
         "\nSão fotografias em preto e branco, impressas em papel de brometo de prata, "
         "\ncom as bordas roídas por uma umidade ácida.\n"
-        "\n--- 🎞️ ARQUIVO DE OBSERVAÇÃO ---\n"
+        "\n--- ARQUIVO DE OBSERVAÇÃO ---\n"
     )
 
     # Foto 1: Horror Clínico
@@ -340,7 +358,7 @@ def read_creepy_photos(player):
         "\nA legenda diz: 'Ele voltou para casa'."
     )
 
-    msg += "\n\n⚠️ O peso daquelas imagens penetra em sua mente. [-8 Sanidade]"
+    msg += "\n\nO peso daquelas imagens penetra em sua mente. [-8 Sanidade]"
 
     return msg
 
@@ -355,7 +373,7 @@ ABISM_THIRD_CHAMBER = GameScene(
                 "para uma escada de madeira carcomida que sobe em direção a um alçapão.\n"
                 "O chão está coalhado de fotos em preto e branco meio digeridas pelo limo,\n"
                 "exibindo rostos de pacientes com olhos vendados e sorrisos costurados — fragmentos de memórias que escaparam do Sanatório.\n"),
-    type="cave",
+    type=SceneType.DARK,
     options=[
         SceneOption("Focar sua consciência ao brilho da Cicatriz de Âmbar", requirement=lambda p: not GameState.get("focus_active"), action=toggle_amber_vision, target_scene_id="abism_third_chamber"),
         SceneOption("Segredo: Descascar a crosta de limo sobre os retratos esquecidos",

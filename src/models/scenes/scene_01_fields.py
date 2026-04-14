@@ -1,5 +1,6 @@
 from src.engine.game_state import GameState
 from src.handlers.inventory_handler import InventoryHandler
+from src.models.database.item_db import ItemDB
 from src.models.entities.scene import GameScene, SceneOption
 
 def description(player):
@@ -31,8 +32,9 @@ MISTERIOUS_FIELD = GameScene(
     title="O Campo Misterioso",
     description=description,
     options=[
-        SceneOption("Forçar a porta principal e confrontar o que quer que esteja lá dentro", target_scene_id="old_hut",only_once=True),
-        SceneOption("Seguir furtivamente pela trilha que leva até os fundos da casa", target_scene_id="old_hut_backyard",
+        SceneOption("Voltar para o Casebre em busca de algo que deixou para trás", requirement=lambda p: GameState.get("scarecrow_dead") and not InventoryHandler.has_item_by_id(p, "chave_porao"), target_scene_id="old_hut"),
+        SceneOption("Forçar a porta principal e ver o que está lá dentro", target_scene_id="old_hut",only_once=True),
+        SceneOption("Seguir pela trilha que leva até os fundos da casa", target_scene_id="old_hut_backyard",
                     requirement=lambda i: not (InventoryHandler.has_item_by_id(i, "adaga_enferrujada") or InventoryHandler.has_item_by_id(i, "lamparina_musgosa")),
                     only_once=False),
         SceneOption("Recuar para a segurança relativa da trilha enlamaçada", target_scene_id="dense_florest")

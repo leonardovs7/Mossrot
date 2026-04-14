@@ -4,14 +4,19 @@ from src.models.database.item_db import ItemDB
 from src.models.entities.item import Item
 from src.models.entities.scene import SceneOption, GameScene
 
-
 def description(player):
     if GameState.get("hatch_open"):
         return (
                "O montante de terra foi removido. A escotilha de ferro está exposta,\n"
                "revelando uma fechadura moldada em osso que parece esperar pela sua chave.\n"
-               "Um frio húmido sobe pelas frestas do metal.\n"
+               "Um frio úmido sobe pelas frestas do metal.\n"
                )
+    elif GameState.get("hatch_digged") and not InventoryHandler.has_item_by_id(player, "chave_porao"):
+        return ("O montante de terra foi removido. A escotilha de ferro está exposta,\n"
+               "revelando uma fechadura moldada em osso que parece esperar por uma chave.\n"
+               "Um frio úmido sobe pelas frestas do metal, trazendo o cheiro de mofo antigo.\n"
+                "\nVocê procura mas não tem nenhuma chave que caiba naquela entrada,\n"
+                "talvez a resposta esteja protegida dentro do Casebre...\n")
     return (
             "Atrás da casa, o mato é alto e sufocante. Sob uma camada espessa de musgo,\n"
             "você nota uma elevação estranha no solo, perfeitamente retangular.\n"
@@ -40,6 +45,17 @@ def handle_dig(player):
     return (f"{base_text}\n\nA fechadura está trancada. Você vasculha o local, mas não há sinal de uma chave.\n"
             "Talvez o dono deste lugar tenha levado o segredo para dentro do casebre...")
 
+def use_key(player):
+    item = ItemDB.get_item("chave_porao")
+    if InventoryHandler.has_item_by_id(player, item):
+        InventoryHandler.remove_item(player, item)
+        GameState.set("hatch_open", True)
+        return ("\nVocê encaixa a Chave de Falange na fechadura de osso e ela entra de forma justa, quase orgânica...\n"
+                               "Ao girar, um estalo duro e metálico ecoa pelo quintal silencioso — um som pesado de engrenagens\n"
+                               "que não sentem o óleo há décadas.\n"
+                               "A escotilha cede com um rangido arrastado, revelando um vão negro que exala o cheiro de terra e segredos guardados.")
+    return None
+
 BACKYARD_HUT = GameScene(
     id="old_hut_backyard",
     title="Fundos do Casebre",
@@ -55,13 +71,10 @@ BACKYARD_HUT = GameScene(
             text="Inserir a Chave de Falange na fechadura e torcer para que abra..",
             target_scene_id="hatch",
             requirement=lambda i: InventoryHandler.has_item_by_id(i, "pa_velha") and InventoryHandler.has_item_by_id(i, "chave_porao") and GameState.get("hatch_digged") and not GameState.get("hatch_open"),
-            action= lambda p: ("\nVocê encaixa a Chave de Falange na fechadura de osso e ela entra de forma justa, quase orgânica...\n"
-            "Ao girar, um estalo duro e metálico ecoa pelo quintal silencioso — um som pesado de engrenagens que não sentem o óleo há décadas.\n"
-            "A escotilha cede com um rangido arrastado, revelando um vão negro que exala o cheiro de terra e segredos guardados.")
-        ),
+            action=use_key),
         SceneOption(text="Entrar no Porão Abandonado", target_scene_id="hatch",
                     requirement=lambda p: GameState.get("hatch_open") and not (
-                                InventoryHandler.has_item_by_id(p, "adaga_enferrujada") and InventoryHandler.has_item_by_id(p,"lamparina_musgosa"))),
+                                InventoryHandler.has_item_by_id(p, "adaga_enferrujada") and InventoryHandler.has_item_by_id(p,"lamparina_musgosa") and InventoryHandler.has_item_by_id(p, "caixa_fosforos"))),
             SceneOption("Voltar para a frente da casa, longe desse lugar", target_scene_id="misterious_field",
                         requirement=lambda p: not (
                                     InventoryHandler.has_item_by_id(p,"adaga_enferrujada") and InventoryHandler.has_item_by_id(p,"lamparina_musgosa"))),

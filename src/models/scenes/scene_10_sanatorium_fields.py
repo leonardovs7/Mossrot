@@ -18,7 +18,7 @@ def mini_boss_introduction(player):
           "de carne podre da cozinha. O silêncio é absoluto, quebrado apenas pelo range-range\n"
           "da grama morta sob suas botas. Você se sente exposto, um alvo fácil naquele oceano de cinzas.")
     time.sleep(2)
-    print("De repente, a névoa se rasga. O silêncio é despedaçado não por um latido, mas por uma súplica distorcida:\n")
+    print("\nDe repente, a névoa se rasga. O silêncio é despedaçado não por um latido, mas por uma súplica distorcida:\n")
     print("'Por favor... ajude... me ajude! Eu estou... preso...'\n")
     time.sleep(3)
     print("*A SILHUETA EMERGE*\n")
@@ -51,6 +51,8 @@ def mini_boss_introduction(player):
                "No rastro da sua morte, você retira uma seiva das raízes negras.\n")
 
         InventoryHandler.add_item(player, ItemDB.get_item("fluido_ancestral"))
+        input("\n[Pressione Enter para continuar...]")
+
         return "sanatorium_fields"
 
 def description(player) -> str:
@@ -61,7 +63,6 @@ def description(player) -> str:
                 "A silhueta do Sanatório agora é uma presença inescapável no horizonte norte.\n"
                 "O rastro de vapor que o Vigia mencionou brilha fracamente sob a luz gélida,\n"
                 "serpenteando entre as raízes negras que cobrem o solo como veias expostas.\n"
-                "Você está no território deles agora. Não há mais volta para a segurança da casa.\n"
             )
     return ""
 
@@ -110,7 +111,7 @@ def action_listen_mists(player):
             "Na névoa, sussurros sem boca repetem palavras que você quase consegue entender.")
 
 def action_try_return_home(player):
-    return (
+    print(
         "\nVocê vira as costas para o rastro de vapor e tenta refazer seus passos rumo ao sul,\n"
         "buscando a segurança da Casa do Vigia. Mas a névoa atrás de você mudou.\n"
         "Ela se tornou uma muralha densa e estática, e as raízes negras se ergueram do solo\n"
@@ -118,6 +119,7 @@ def action_try_return_home(player):
         "Sua Cicatriz de Âmbar pulsa com uma dor aguda, um aviso de que seu destino agora\n"
         "está à frente, no Sanatório. O passado foi devorado pela névoa."
     )
+    return "sanatorium_fields"
 
 SANATORIUM_FIELDS = GameScene(
     id="sanatorium_fields",

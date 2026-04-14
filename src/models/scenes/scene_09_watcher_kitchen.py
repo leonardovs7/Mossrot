@@ -4,6 +4,7 @@ from src.engine.game_state import GameState
 from src.handlers.inventory_handler import InventoryHandler
 from src.models.database.item_db import ItemDB
 from src.models.entities.scene import GameScene, SceneOption
+from src.models.enums import SceneType
 from src.services.sanity_service import SanityService
 
 def see_sink(player):
@@ -44,7 +45,7 @@ def see_drawer(player):
 def force_focus_kitchen(player):
     if GameState.get("focus_active"):
         return "\nSua visão já está sintonizada com a dissonância deste lugar. O ar vibra com veias de luz negra."
-    GameState.set("focus_active", True)
+    GameState.set("focus_active", True, immutable=False)
     print(
         "\nVocê ignora o nojo e fixa o olhar no pulsar rítmico do mofo negro sobre o fogão.\n"
         "O mundo ao redor começa a derreter; as cores desaparecem, restando apenas o brilho doentio\n"
@@ -62,7 +63,7 @@ WATCHER_KITCHEN = GameScene(
                  "como se a casa estivesse chorando óleo.\n"
                  "\nUtensílios de metal, oxidados e retorcidos, pendem de ganchos enferrujados, balançando sem vento algum.\n"
                  "balcão de pedra está rachado, e das frestas brotam pequenas gavinhas que parecem buscar o calor da sua lamparina.\n"),
-    type="moldy",
+    type=SceneType.MOLDY,
     spore_index=25,
     options=[
         SceneOption("Mergulhar as mãos na gordura fria da pia de metal", action=see_sink, only_once=True, target_scene_id="watcher_kitchen"),

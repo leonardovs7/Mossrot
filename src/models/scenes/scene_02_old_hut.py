@@ -1,3 +1,4 @@
+import time
 from src.engine.game_state import GameState
 from src.handlers.inventory_handler import InventoryHandler
 from src.models.database.item_db import ItemDB
@@ -5,19 +6,24 @@ from src.models.entities.enemy import Enemy
 from src.models.entities.scene import GameScene, SceneOption
 from src.services.combat_service import CombatService
 
-
 def handle_combat(player):
-    print("\n")
+    time.sleep(2)
     scarecrow = Enemy(name="Espantalho Vivo", level=1, hp=3, max_hp=3, damage_reduction=0.0, base_damage=1, xp_reward=4)
     CombatService.start_combat(player, scarecrow, is_surprise=True)
-    if player.hp > 0:
-        GameState.set("scarecrow_dead", True)
+    GameState.set("scarecrow_dead", True)
+    input("\n[Pressione Enter para continuar...]")
+    return "old_hut"
+
+def description_prenpost(player):
+    if not GameState.get("scarecrow_dead"):
         return (
-                "\nA carcaça do espantalho desmorona, as costuras de palha cedendo sob seu golpe final.\n"
-                "O silêncio que retorna ao casebre é pesado, interrompido apenas pela sua respiração ofegante.\n"
-                "O perigo imediato se foi, mas o ar continua carregado de eletricidade estática."
-                )
-    return None
+        "Você entra. A luz amarelada no canto pulsa como um coração doente.\n"
+        "O frio é paralisante. Antes que você possa dar o primeiro passo para trás,\n"
+        "a silhueta de musgo e carne podre se desprende da escuridão...\n"
+    )
+    return ("A carcaça do espantalho desmorona, as costuras de palha cedendo sob seu golpe final.\n"
+            "O silêncio que retorna ao casebre é pesado, interrompido apenas pela sua respiração ofegante.\n"
+            "O perigo imediato se foi, mas o ar continua carregado de eletricidade estática.")
 
 def collect_key(player):
     key = ItemDB.get_item("chave_porao")
@@ -34,12 +40,9 @@ def collect_key(player):
 OLD_HUT = GameScene(
     id="old_hut",
     title="O Casebre",
-    description=(
-        "Você entra. A luz amarelada no canto pulsa como um coração doente.\n"
-        "O frio é paralisante. Antes que você possa dar o primeiro passo para trás,\n"
-        "a silhueta de musgo e carne podre se desprende da escuridão..."
-    ),
+    description=description_prenpost,
     on_enter=handle_combat,
+    on_enter_repeatable=False,
     options=[
         SceneOption("Se aproximar do que restou da criatura e investigar..", target_scene_id="scarecrow_body"),
         SceneOption("Não olhar para trás e sair logo desta casa", target_scene_id="misterious_field")
@@ -62,6 +65,6 @@ SCARECROW_BODY = GameScene(
             action=collect_key,
             only_once=True
         ),
-        SceneOption("Ignorar a chave e sair antes que o ar acabe", target_scene_id="misterious_field") # Volta para a sala principal
+        SceneOption("Sair antes que o ar acabe", target_scene_id="misterious_field") # Volta para a sala principal
     ]
 )

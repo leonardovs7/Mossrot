@@ -1,4 +1,7 @@
 from dataclasses import dataclass
+from src.models.enums import ItemCategory, ItemSubcategory, StatusEffect
+
+
 #from typing import Optional, Callable
 
 @dataclass
@@ -6,8 +9,9 @@ class Item:
     id: str
     name: str #nome do item
     description: str #descricao do item
-    category: str #categoria do item
-    subcategory: str #subcategoria do item
+    category: ItemCategory #categoria do item
+    subcategory: ItemSubcategory #subcategoria do item
+    status_effect: StatusEffect #status que o item aplica
     is_consumable: bool #o item é consumivel
     is_equippable: bool #o item é equipavel
     is_equipped: bool #o item esta equipado

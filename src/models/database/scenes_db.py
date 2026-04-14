@@ -9,6 +9,7 @@ from src.models.scenes.scene_07_watcher_living_room import WATCHER_LIVING_ROOM
 from src.models.scenes.scene_08_watcher_upstairs import WATCHER_UPSTAIRS
 from src.models.scenes.scene_09_watcher_kitchen import WATCHER_KITCHEN
 from src.models.scenes.scene_10_sanatorium_fields import SANATORIUM_FIELDS
+from src.models.scenes.scene_11_sanatorium_gates import SANATORIUM_GATES
 
 ALL_SCENES = [
     DENSE_FLOREST, DENSE_FLOREST_ATTACK,
@@ -18,5 +19,5 @@ ALL_SCENES = [
     HATCH,
     LIME_ABISM, ABISM_FIRST_CHAMBER, ABISM_SECOND_CHAMBER, ABISM_SECOND_CHAMBER_PUZZLE, ABISM_THIRD_CHAMBER,
     WATCHER_BASEMENT, WATCHER_LIVING_ROOM, WATCHER_UPSTAIRS, WATCHER_KITCHEN,
-    SANATORIUM_FIELDS
+    SANATORIUM_FIELDS, SANATORIUM_GATES
 ]

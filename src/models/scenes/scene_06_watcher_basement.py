@@ -21,7 +21,7 @@ def on_enter_basement(player):
     print("Um som úmido ecoa enquanto algo se arrasta com uma velocidade antinatural.")
     time.sleep(2)
 
-    print("\n⚠️  DE REPENTE, A LUZ DA SUA CHAMA REVELA O HORROR!\n")
+    print("\nDE REPENTE, A LUZ DA SUA CHAMA REVELA O HORROR!\n")
     print("É o que restou do Vigia. Ele está partido ao meio na altura da cintura, "
           "seus intestinos se arrastam atrás dele como caudas de rato cinzentas.")
     print("Com um grito rouco e sem pulmões, ele se lança contra suas pernas, "
@@ -39,7 +39,7 @@ def on_enter_basement(player):
 
 def pry_open_files(player):
     if not InventoryHandler.has_item_by_id(player, "pe_de_cabra"):
-        return "❌ A gaveta de aço está emperrada pelo tempo. Você precisa de algo para alavancá-la."
+        return "A gaveta de aço está emperrada pelo tempo. Você precisa de algo para alavancá-la."
 
     if GameState.get("files_opened"):
         return "\nA gaveta já está aberta e vazia."
@@ -61,7 +61,7 @@ def pry_open_files(player):
     msg += "\nNo canto da última página, há um lembrete circulado várias vezes:\n"
     msg += "'Não use o portão principal. Eles soldaram as trancas por um motivo. Entre por onde o vapor sai.'"
 
-    msg += "\n\n⚠️ O Vigia parecia aterrorizado com o que via na Lavanderia, mas apontou aquele lugar como a única entrada."
+    msg += "\n\nO Vigia parecia aterrorizado com o que via na Lavanderia, mas apontou aquele lugar como a única entrada."
 
     LevelHandler.earn_xp(player, 5)
     return msg

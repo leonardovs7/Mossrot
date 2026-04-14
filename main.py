@@ -7,7 +7,8 @@ from src.models.database.scenes_db import ALL_SCENES
 from src.models.entities.player import Player
 
 def main():
-    GameState.set("active", True)
+    GameState.init()
+    GameState.set("active", True, immutable=False)
 
     SceneBridge.say("Você desperta na terra fria de uma floresta densa e sombria, a mente turva e sem memória de como chegou ali..")
     SceneBridge.say("\nComo a história chamará você? ")
@@ -28,6 +29,7 @@ def main():
         sys.exit()
     except Exception as e:
         print(f"\nErro: {e}")
+    GameState.set("active", False, immutable=False)
 
 if __name__ == "__main__":
     main()

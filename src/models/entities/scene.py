@@ -1,5 +1,7 @@
 from dataclasses import dataclass, field
 from typing import List, Callable, Optional, Any, Union
+from src.models.enums import SceneType
+
 
 @dataclass
 class SceneOption:
@@ -15,7 +17,7 @@ class GameScene:
     id: str  # ID único da cena
     title: str  # Título que aparece no topo
     description: Union[str, Callable[[Any], str]] # A descrição pode ser uma String OU uma Função que retorna String (dinâmica)
-    type: str = "regular"  # Ex: "cave" para disparar emboscadas
+    type: SceneType = SceneType.NORMAL # Ex: "DARK" para disparar emboscadas
     spore_index: int = 0 #% de mofo para salas moldy
     on_enter: Optional[Callable[[Any], Any]] = None  # Evento ao entrar na cena
     on_enter_repeatable: bool = False  # Define se o evento on_enter acontece toda vez

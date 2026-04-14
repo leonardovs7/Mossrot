@@ -1,6 +1,8 @@
 from src.handlers.inventory_handler import InventoryHandler
 from src.models.database.item_db import ItemDB
 from src.models.entities.scene import GameScene, SceneOption
+from src.models.enums import SceneType
+
 
 def cut_pillow(player):
     print("\nVocê usa sua lâmina para cortar as fibras negras que protegem o ninho.\n"
@@ -36,7 +38,7 @@ WATCHER_UPSTAIRS = GameScene(
                 "Uma cama de dossel domina o quarto, mas os lençóis foram substituídos por um emaranhado de raízes que formam um ninho central.\n"
                 "O assoalho range de forma irregular, como se algo estivesse se movendo sob as tábuas.\n"
                 "Não há janelas; apenas molduras vazias pregadas na parede, emoldurando a escuridão absoluta.\n"),
-    type="moldy",
+    type=SceneType.MOLDY,
     spore_index=5,
     options=[
         SceneOption("Rasgar as cortinas de raízes sobre a cama de dossel", action=cut_pillow, only_once=True, target_scene_id="watcher_upstairs"),

@@ -10,8 +10,9 @@ from src.services.inventory_service import InventoryService, WeaponArmorService
 
 
 def main():
-    GameState.set("active", True)
-
+    GameState.init()
+    GameState.set("active", False)
+    GameState.show_debug()
     print("Você desperta na terra fria de uma floresta densa e sombria, a mente turva e sem memória de como chegou ali..")
     print("\nComo a história chamará você? ")
     nome = input("> ")
@@ -25,7 +26,6 @@ def main():
     InventoryHandler.add_item(player, ItemDB.get_item("lamparina_musgosa"))
     InventoryHandler.add_item(player, ItemDB.get_item("caixa_fosforos"))
     InventoryHandler.add_item(player, ItemDB.get_item("oleo_carne"))
-    InventoryHandler.add_item(player, ItemDB.get_item("cicatriz_ambar"))
     InventoryHandler.add_item(player, ItemDB.get_item("estilete_raiz"))
     WeaponArmorService.equip_weapon(player, ItemDB.get_item("estilete_raiz"))
     print(str(player.equipped_weapon))
@@ -35,7 +35,7 @@ def main():
     GameState.set("mist_mini_boss_defeated", True)
 
     try:
-        manager = SceneManager(scenes=ALL_SCENES, start_id="sanatorium_fields")
+        manager = SceneManager(scenes=ALL_SCENES, start_id="abism_first_chamber")
         manager.navigate(player)
 
     except KeyboardInterrupt:

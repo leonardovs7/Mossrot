@@ -10,7 +10,7 @@ class Player(Entity):
     hp: int = 15
     max_hp: int = 15
     level: int = 1
-    base_damage: int = 4
+    base_damage: int = 2
     damage_reduction: float = 0.0
     current_xp: int = 0
 

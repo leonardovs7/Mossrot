@@ -24,23 +24,41 @@ class InventoryHandler:
                 print(f"[+] {entity.name} recolheu: {new_item.name}")
 
         @staticmethod
-        def remove_item(entity, item: Item, amount: int = 1) -> bool:
-            """Remove uma quantidade do item. Se chegar a 0, remove o objeto da lista."""
-            if not hasattr(entity, 'inventory') or item not in entity.inventory:
+        def remove_item(entity, item, amount: int = 1) -> bool:
+            """
+            Remove uma quantidade do item. Aceita objeto Item ou string (ID). Se chegar a 0, remove o objeto da lista.
+            """
+            if not hasattr(entity, 'inventory'):
                 return False
 
-            # Se tiver mais do que a quantidade que queremos remover
-            if getattr(item, 'quantity', 1) > amount:
-                item.quantity -= amount
-                print(f"[-] {entity.name} consumiu {amount}x {item.name}. Restam {item.quantity}.")
+            # --- RESOLUÇÃO DO ITEM ---
+            target_item = None
+            if isinstance(item, str):
+                # Procura o item pelo ID dentro do inventário da própria entidade
+                for i in entity.inventory:
+                    if getattr(i, 'id', None) == item:
+                        target_item = i
+                        break
+
+                if not target_item:
+                    return False
+            else:
+                target_item = item
+
+            if target_item not in entity.inventory:
+                return False
+
+            # --- LÓGICA DE REMOÇÃO ---
+            if getattr(target_item, 'quantity', 1) > amount:
+                target_item.quantity -= amount
+                print(f"[-] {entity.name} consumiu {amount}x {target_item.name}. Restam {target_item.quantity}.")
                 return True
             else:
-                entity.inventory.remove(item)
-                if item.stackable:
-                # Se a quantidade for igual ou menor, removemos o slot inteiro
-                    print(f"[-] {entity.name} esgotou o estoque de {item.name}.")
+                entity.inventory.remove(target_item)
+                if getattr(target_item, 'stackable', False):
+                    print(f"[-] {entity.name} esgotou o estoque de {target_item.name}.")
                 else:
-                    print(f"[-] {entity.name} usou o {item.name}.")
+                    print(f"[-] {entity.name} usou o {target_item.name}.")
                 return True
 
         @staticmethod

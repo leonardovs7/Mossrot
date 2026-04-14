@@ -18,13 +18,13 @@ class SporeService:
                 player.spore_debt += spore_damage_debt #soma o dano tomado no spore_damage_debt
 
                 if spore_damage_debt > 20:
-                    msg = f"\n>>> ☣ Você tosse violentamente enquanto o limo invade suas vias aéreas!* (-{spore_damage_debt} HP) <<<"
+                    msg = f"\n>>> Você tosse violentamente enquanto o limo invade suas vias aéreas!* (-{spore_damage_debt} HP) <<<"
                 else:
-                    msg = f"\n>>> ☣ O ar está pesado. Esporos de Limo irritam seus pulmões. (-{spore_damage_debt} HP) <<<"
+                    msg = f"\n>>> O ar está pesado. Esporos de Limo irritam seus pulmões. (-{spore_damage_debt} HP) <<<"
                 feedback_messages.append(msg)
 
             elif player.hp == 1:
-                feedback_messages.append("\n>>> ☣ Seus pulmões queimam e o ar parece sólido. Você não aguenta muito mais tempo aqui. <<<")
+                feedback_messages.append("\n>>> Seus pulmões queimam e o ar parece sólido. Você não aguenta muito mais tempo aqui. <<<")
 
         return feedback_messages
 

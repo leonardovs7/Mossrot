@@ -1,5 +1,3 @@
-import time
-
 from src.engine.game_state import GameState
 from src.handlers.inventory_handler import InventoryHandler
 from src.models.database.item_db import ItemDB
@@ -8,7 +6,6 @@ from src.services.inventory_service import InventoryService
 
 
 def enter_basement(player):
-    GameState.set("hatch_open", True)
     if GameState.get("hatch_open") and InventoryHandler.has_item_by_id(player, "chave_porao"):
         InventoryHandler.remove_item(player, "chave_porao")
     return (
@@ -34,15 +31,28 @@ def going_table(player):
         if choice == "1":
             feedback = InventoryService.use(player, dagger)
             print(feedback)
+        elif choice == "2":
+            print()
+            return (
+                    "As travas da maleta cedem com um estalo seco. Dentro dela, repousando sobre\n"
+                    "documentos oficiais agora ilegíveis, você encontra uma adaga de lâmina curta.\n"
+                    "A crosta de ferrugem que a cobre é tão densa e irregular que parece ter se\n"
+                    "alimentado do tempo e de algo mais... algo que deixou o metal doente.\n\n"
+                    "O cabo de madeira está tomado por um mofo cinzento e aveludado que parece\n"
+                    "soltar esporos ao seu toque. Você desliza a adaga de volta ao seu lugar,\n"
+                    "\nsentindo o peso frio do metal desaparecer contra o corpo.\n"
+                    "Por agora, não há ameaça à vista — nenhuma razão para mantê-la em mãos.\n"
+                    "O silêncio ao redor sugere que este não é o momento de luta, mas de seguir em frente com cautela."
+                    )
         return (
-                "\nAs travas da maleta cedem com um estalo seco. Dentro dela, repousando sobre\n"
-                "documentos oficiais agora ilegíveis, você encontra uma adaga de lâmina curta.\n"
-                "A crosta de ferrugem que a cobre é tão densa e irregular que parece ter se\n"
-                "alimentado do tempo e de algo mais... algo que deixou o metal doente.\n\n"
-                "O cabo de madeira está tomado por um mofo cinzento e aveludado que parece\n"
-                "soltar esporos ao seu toque. Ao empunhá-la, um calafrio percorre sua espinha;\n"
-                "mesmo velha, a lâmina transmite um peso hostil, como se estivesse faminta."
-                )
+                    "\nAs travas da maleta cedem com um estalo seco. Dentro dela, repousando sobre\n"
+                    "documentos oficiais agora ilegíveis, você encontra uma adaga de lâmina curta.\n"
+                    "A crosta de ferrugem que a cobre é tão densa e irregular que parece ter se\n"
+                    "alimentado do tempo e de algo mais... algo que deixou o metal doente.\n\n"
+                    "O cabo de madeira está tomado por um mofo cinzento e aveludado que parece\n"
+                    "soltar esporos ao seu toque. Ao empunhá-la, um calafrio percorre sua espinha;\n"
+                    "mesmo velha, a lâmina transmite um peso hostil, como se estivesse faminta."
+                    )
     return None
 
 def going_back(player):

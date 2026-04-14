@@ -15,7 +15,7 @@ def description(player):
         "Você está sozinho sobre a terra úmida de uma floresta densa.\n"
         "As sombras das árvores balançam como garras negras ao vento.\n"
         "Você olha para as próprias mãos e nota uma pequena lasca de madeira brotando da sua carne..\n"
-        "Os arbustos próximos tremem levemente... como se algo estivesse à espreita.\n"
+        "Os arbustos próximos tremem levemente como se algo estivesse à espreita...\n"
         )
     return (
         "O ar da floresta agora parece estagnado, como se as árvores estivessem prendendo o fôlego.\n"
@@ -38,6 +38,17 @@ def dogs_description(player):
         "pedaços de carne pendem de 'ossos' feitos de madeira velha. Eles não latem.\n"
         "O único som que emite é o estalo de madeira seca e o chiado de moscas.\n"
         )
+    if GameState.get("after_entrance"):
+        msg = ("Você recua, preferindo o desconhecido da floresta ao breu absoluto do subsolo.\n"
+               "Mas ao dar os primeiros passos de volta, o silêncio da mata te atinge como um peso físico.\n")
+        msg += ("\nA trilha por onde você veio parece ter se transformado. As árvores pálidas se inclinam de forma\n"
+                "agressiva, e os corpos dos cães que você abateu já estão sendo cobertos por uma névoa rasteira\n"
+                "e filamentos cinzentos que parecem vir debaixo da terra. O cheiro de ferro e ozônio é insuportável.\n")
+        msg += (
+            "\nVocê sente dezenas de pares de olhos famintos fixos em sua nuca, mas ao se virar, vê apenas sombras\n"
+            "que se alongam e se movem de forma antinatural entre os troncos. O caminho de volta sumiu na bruma.\n"
+            "O único caminho que a realidade ainda permite é o abismo da caverna à sua frente.\n")
+        return msg
     return (
         "Você volta ao lugar onde tudo começou, mas o cenário é irreconhecível.\n"
         "A lama onde você acordou agora parece um pântano de piche negro, borbulhando\n"
@@ -60,6 +71,8 @@ def combat_putrid_dogs(player):
     enemies = [dog1, dog2]
     CombatService.start_combat(player, enemies, is_surprise=True)
     GameState.set("putrid_dogs_dead", True)
+    input("\n[Pressione Enter para voltar...]")
+    return "dense_florest_attack"
 
 def seek_dogs_loot(player):
     cura = ItemDB.get_item("tonico_amargo")
@@ -83,6 +96,7 @@ DENSE_FLOREST_ATTACK = GameScene(
     title="O Ataque na Floresta Densa",
     description=dogs_description,
     on_enter=combat_putrid_dogs,
+    on_enter_repeatable=False,
     options=[
         SceneOption("Vasculhar os restos das abominações", target_scene_id="dense_florest_attack", action=seek_dogs_loot ,only_once=True),
         SceneOption("Seguir o rastro que leva até uma abertura escura entre as árvores densas", target_scene_id="lime_abism")

@@ -5,6 +5,7 @@ import random
 from typing import List
 from src.engine.game_state import GameState
 from src.engine.scene_bridge import SceneBridge
+from src.models.enums import SceneType
 from src.services.inventory_service import InventoryService
 from src.handlers.shadow_ambush_handler import ShadowAmbushHandler
 from src.models.entities.item import LightEquipment
@@ -22,13 +23,15 @@ class SceneManager:
         for x in text:
             sys.stdout.write(x)
             sys.stdout.flush()
+            #delay = random.uniform(0.02, 0.06)
+            #time.sleep(delay)
         print()
 
     def display_scene(self, player):
         os.system('cls' if os.name == 'nt' else 'clear')
         while True:
-            spore_perc = getattr(self.current_scene, 'spore_index', None)
-            if spore_perc > 0:
+            if self.current_scene.type == SceneType.MOLDY:
+                spore_perc = getattr(self.current_scene, 'spore_index', 0)
                 self.type_text(f"\n=== {self.current_scene.title} - [{spore_perc}% Contaminado] ===\n".upper())
             else:
                 self.type_text(f"\n=== {self.current_scene.title} ===\n".upper())
@@ -40,18 +43,18 @@ class SceneManager:
                 self.type_text(description)
 
             # Evento ao entrar na cena
-            if self.current_scene.on_enter:
-                action = self.current_scene.on_enter
-                if not getattr(self.current_scene, "on_enter_repeatable", False):
-                    self.current_scene.on_enter = None
-
-                feedback = action(player)
-                if isinstance(feedback, str):
-                    if feedback in self.scenes:
-                        self.current_scene = self.scenes[feedback]
+            if self.current_scene.on_enter: #se existe o evento de on_enter na cena
+                action = self.current_scene.on_enter #define a action do on_enter
+                if not getattr(self.current_scene, "on_enter_repeatable", False): #se o en_enter_repeatable for true >
+                    self.current_scene.on_enter = None #define o on_enter como None para não reproduzir novamente
+                feedback = action(player) #pega o retorno da action
+                if isinstance(feedback, str): #se a action retornar uma str
+                    if feedback in self.scenes: #se o retorno da action for uma scene
+                        self.current_scene = self.scenes[feedback] #muda a cena para o retorno da ação
+                        os.system('cls' if os.name == 'nt' else 'clear') #limpa o console
                         continue
-                    else:
-                        self.type_text(feedback)
+                    else: #se não for uma scene
+                        self.type_text(feedback) #digita com efeito o retorno da action
                         input("\n[Pressione Enter para continuar...]")
 
             # Filtrar opções válidas
@@ -75,72 +78,86 @@ class SceneManager:
             if self.current_scene and self.current_scene.id != target_id:
                 # Só reseta se o foco estava ligado
                 if GameState.get("focus_active"):
-                    GameState.set("focus_active", False)
+                    GameState.set("focus_active", False, immutable=False)
                     self.type_text("\n👁️ Sua concentração se quebra ao mudar de ambiente...")
+                    input("\n[Pressione Enter para continuar...]")
 
                 # Só recupera a respiração se sair da área mofada
-                if hasattr(target, 'type') and target.type != "moldy":
+                if self.current_scene.type == SceneType.MOLDY and target.type != SceneType.MOLDY:
                     recovery_msg = SporeService.recover_breathe(player)
                     if recovery_msg:
                         self.type_text(recovery_msg)
+                        input("\n[Pressione Enter para continuar...]")
 
             # Lógica de Caverna/Escuridão
-            if hasattr(target, 'type') and target.type == "cave":
-                # Consome combustível da lamparina se trocar de cena
-                feedbacks = LightService.process_consume(player)
-                if feedbacks:
-                    for msg in feedbacks:
-                        self.type_text(msg)
+            match target.type:
+                case SceneType.DARK:
+                    # Consome combustível e checa se está acesa (Luz)
+                    feedbacks = LightService.process_consume(player)
+                    if feedbacks:
+                        for msg in feedbacks:
+                            self.type_text(msg)
 
                 # Se não tem luz (atributo do Player), gera emboscada
-                if not any(getattr(i, 'is_lit', False) for i in player.inventory):
-                    ShadowAmbushHandler.trigger_shadow_ambush(player)
+                    if not any(getattr(i, 'is_lit', False) for i in player.inventory):
+                        ShadowAmbushHandler.trigger_shadow_ambush(player)
 
             # Lógica de Áreas Mofadas
-            if hasattr(target, 'type') and target.type == "moldy":
-                feedbacks = SporeService.process_breathing(player, target)
-                if feedbacks:
-                    for msg in feedbacks:
-                        self.type_text(msg)
+                case SceneType.MOLDY:
+                    # Processa a respiração e acúmulo de esporos
+                    feedbacks = SporeService.process_breathing(player, target)
+                    if feedbacks:
+                        for msg in feedbacks:
+                            self.type_text(msg)
+
+                case SceneType.NORMAL:
+                    pass
 
             if player.is_alive:
                 self.current_scene = target
+                GameState.set("last_scene", target.id)
+
         else:
-            print(f"❌ ERRO: Cena {target_id} não encontrada!")
+            print(f"ERRO: Cena {target_id} não encontrada!")
 
     def show_inventory(self, player):
-        print("\n[INVENTÁRIO]")
-        if not player.inventory:
-            self.type_text("Suas mãos estão vazias...")
-            return
+        while True:
+            os.system('cls' if os.name == 'nt' else 'clear')
+            print("\n[INVENTÁRIO]")
+            if not player.inventory:
+                self.type_text("Suas mãos estão vazias...")
+                input("\n[Pressione Enter para continuar...]")
+                return
 
-        for i, item in enumerate(player.inventory, 1):
-            name_and_quantity = f"({item.quantity}x) {item.name}"
-            print(f"{i} - {name_and_quantity:<35} [{item.category}]")
+            for i, item in enumerate(player.inventory, 1):
+                name_and_quantity = f"({item.quantity}x) {item.name}"
+                print(f"{i} - {name_and_quantity:<40} [{item.category}]")
 
-        print("\n[EQUIPAMENTOS]")
-        print(f"🗡️ Arma: {player.weapon} (+{player.current_weapon_damage})")
-        print(f"🛡️ Armadura: {player.armor} (+{player.current_armor_defense})")
-        print("\n[0] Voltar | [ID] Examinar")
+            print("\n[EQUIPAMENTOS]")
+            print(f"🗡️ Arma: {player.weapon} (+{player.current_weapon_damage})")
+            print(f"🛡️ Armadura: {player.armor} (+{player.current_armor_defense})")
+            print("\n[0] Voltar | [ID] Examinar")
 
-        try:
-            choice = input("> ")
-            if choice == "0": return
+            try:
+                choice = input("> ")
+                if choice == "0": return
 
-            idx = int(choice) - 1
-            if 0 <= idx < len(player.inventory):
-                item = player.inventory[idx]
-                self.type_text(f"\n>> {item.name}: {item.description}")
-                print("\n[1] Usar/Equipar | [2] Sair")
+                idx = int(choice) - 1
+                if 0 <= idx < len(player.inventory):
+                    item = player.inventory[idx]
+                    self.type_text(f"\n>> {item.name}: {item.description}")
+                    print("\n[1] Usar/Equipar | [2] Sair")
 
-                opt = input("> ")
-                if opt == "1":
-                    feedback = InventoryService.use(player, item)
-                    if feedback:
-                        self.type_text(feedback)
-                    input("\n[Pressione Enter para continuar...]")
-        except (ValueError, IndexError):
-            pass
+                    opt = input("> ")
+                    if opt == "1":
+                        feedback = InventoryService.use(player, item)
+                        if feedback:
+                            self.type_text(feedback)
+                        input("\n[Pressione Enter para continuar...]")
+                    elif opt == "2":
+                        continue
+            except (ValueError, IndexError):
+                pass
 
     def show_status(self, player):
         # Busca lamparina para mostrar o fuel

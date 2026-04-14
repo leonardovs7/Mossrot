@@ -2,6 +2,7 @@ from src.engine.game_state import GameState
 from src.handlers.inventory_handler import InventoryHandler
 from src.models.database.item_db import ItemDB
 from src.models.entities.scene import GameScene, SceneOption
+from src.models.enums import SceneType
 from src.services.sanity_service import SanityService
 
 
@@ -59,7 +60,7 @@ WATCHER_LIVING_ROOM = GameScene(
                 "\nUm sofá de veludo rasgado ocupa o centro, voltado para uma televisão de tubo cujo vidro está estilhaçado\n"
                 "de dentro para fora. O cheiro de poeira e esporos é tão denso que você consegue\n"
                 "sentir o gosto metálico no fundo da garganta. O silêncio aqui não é vazio; é expectante.\n"),
-    type="moldy",
+    type=SceneType.MOLDY,
     spore_index=15,
     options=[
         SceneOption("Dedilhar as lombadas da estante de carvalho em decomposição", action=seek_bookshelf, target_scene_id="watcher_living_room"),
